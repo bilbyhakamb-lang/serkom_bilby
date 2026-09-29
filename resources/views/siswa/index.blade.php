@@ -8,12 +8,12 @@
 <style>
     .siswa-page {
         width: 100%;
-        max-width: 1250px;
-        margin: 0 auto;
+        max-width: none;
+        margin: 0;
         padding: 30px;
         box-sizing: border-box;
         color: #26352d;
-    }
+}
 
     .siswa-heading {
         margin-bottom: 25px;

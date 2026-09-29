@@ -1,134 +1,265 @@
 @extends('admin_app')
 
+@section('title', 'Kelola Guru')
+
 @section('content')
-<th>Ini Halaman Guru</th>
+<div class="container-fluid py-4">
 
-{{-- <div class="container">
+    <!-- HEADER -->
+    <div class="guru-header mb-4">
+        <div>
+            <h2>Kelola Guru</h2>
+            <p>Kelola data guru dan informasi pengajar sekolah.</p>
+        </div>
+        <i class="bi bi-person-workspace header-icon"></i>
+    </div>
 
-    <h2 style="margin-bottom: 20px;">Kelola Data Guru</h2>
+    <!-- PESAN -->
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
-    <!-- FORM TAMBAH GURU -->
-    <div style="
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-        margin-bottom: 25px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    ">
+    @if($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
-        <h3 style="margin-bottom: 15px;">Tambah Data Guru</h3>
+    <!-- DAFTAR GURU -->
+    <div class="guru-card">
 
-        <form action="{{ route('guru.store') }}" method="POST">
-            @csrf
-
-            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-
-                <input
-                    type="text"
-                    name="nama_guru"
-                    placeholder="Nama Guru"
-                    style="padding: 10px; width: 200px; border: 1px solid #ccc; border-radius: 6px;"
-                >
-
-                <input
-                    type="text"
-                    name="nip"
-                    placeholder="NIP"
-                    style="padding: 10px; width: 180px; border: 1px solid #ccc; border-radius: 6px;"
-                >
-
-                <input
-                    type="text"
-                    name="mapel"
-                    placeholder="Mata Pelajaran"
-                    style="padding: 10px; width: 200px; border: 1px solid #ccc; border-radius: 6px;"
-                >
-
-                <input
-                    type="text"
-                    name="foto"
-                    placeholder="Nama Foto"
-                    style="padding: 10px; width: 180px; border: 1px solid #ccc; border-radius: 6px;"
-                >
-
-                <button
-                    type="submit"
-                    style="
-                        padding: 10px 20px;
-                        background: #064e3b;
-                        color: white;
-                        border: none;
-                        border-radius: 6px;
-                        cursor: pointer;
-                    "
-                >
-                    + Tambah Guru
-                </button>
-
+        <div class="d-flex justify-content-between
+                    align-items-center flex-wrap gap-3 mb-4">
+            <div>
+                <h5 class="mb-1">Data Guru</h5>
+                <small class="text-muted">
+                    Daftar guru yang terdaftar
+                </small>
             </div>
 
-        </form>
+            <!-- TOMBOL TAMBAH GURU -->
+            <a href="{{ route('guru.create') }}"
+               class="btn btn-add">
+                <i class="bi bi-plus-circle"></i>
+                Tambah Guru
+            </a>
+        </div>
+
+        <!-- TABEL DATA GURU -->
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Foto</th>
+                        <th>Nama Guru</th>
+                        <th>NIP</th>
+                        <th>Mata Pelajaran</th>
+                        <th class="text-center">Aksi</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @forelse($guru as $item)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+
+                            <!-- FOTO GURU -->
+                            <td>
+                                @if($item->foto)
+                                    <img
+                                        src="{{ asset('storage/'.$item->foto) }}"
+                                        alt="Foto Guru"
+                                        class="guru-photo">
+                                @else
+                                    <div class="guru-placeholder">
+                                        <i class="bi bi-person"></i>
+                                    </div>
+                                @endif
+                            </td>
+
+                            <!-- NAMA GURU -->
+                            <td class="fw-semibold">
+                                {{ $item->nama_guru }}
+                            </td>
+
+                            <!-- NIP -->
+                            <td>{{ $item->nip ?? '-' }}</td>
+
+                            <!-- MATA PELAJARAN -->
+                            <td>{{ $item->mapel }}</td>
+
+                            <!-- AKSI -->
+                            <td class="text-center">
+                                <div class="d-flex justify-content-center gap-2">
+
+                                    <!-- TOMBOL EDIT -->
+                                    <a href="{{ route('guru.edit', $item->id_guru) }}"
+                                       class="btn btn-sm btn-edit"
+                                       title="Edit">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+
+                                    <!-- TOMBOL HAPUS -->
+                                    <form
+                                        action="{{ route('guru.destroy', $item->id_guru) }}"
+                                        method="POST"
+                                        onsubmit="return confirm('Yakin ingin menghapus data guru ini?')">
+
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button type="submit"
+                                                class="btn btn-sm btn-delete"
+                                                title="Hapus">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6" class="text-center py-5">
+                                <i class="bi bi-person-x fs-1 text-muted"></i>
+                                <p class="text-muted mt-2 mb-0">
+                                    Belum ada data guru.
+                                </p>
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+
+        <!-- TOTAL GURU -->
+        <div class="text-muted small mt-3">
+            Total guru: {{ $guru->count() }}
+        </div>
 
     </div>
+</div>
 
+<!-- CSS -->
+<style>
+.guru-header {
+    background: linear-gradient(135deg, #18392b, #32634a);
+    color: white;
+    padding: 25px 30px;
+    border-radius: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-    <!-- TABEL DATA GURU -->
-    <div style="
-        background: white;
+.guru-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.guru-header p {
+    margin: 0;
+    color: #dce9df;
+}
+
+.header-icon {
+    font-size: 42px;
+    opacity: .85;
+}
+
+.guru-card {
+    background: white;
+    border-radius: 14px;
+    padding: 25px;
+    box-shadow: 0 3px 15px rgba(0,0,0,.06);
+}
+
+.guru-card h5 {
+    color: #263b30;
+    font-weight: 700;
+}
+
+.table thead th {
+    background: #edf4ef;
+    color: #28563e;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.table tbody td {
+    color: #34483b;
+    font-size: 14px;
+}
+
+.guru-photo,
+.guru-placeholder {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
+.guru-photo {
+    object-fit: cover;
+    border: 2px solid #d9e8dc;
+}
+
+.guru-placeholder {
+    background: #edf4ef;
+    color: #32634a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+}
+
+.btn-add {
+    background: #28563e;
+    color: white;
+    border-radius: 8px;
+    padding: 10px 16px;
+}
+
+.btn-add:hover {
+    background: #18392b;
+    color: white;
+}
+
+.btn-edit {
+    background: #e6f0e9;
+    color: #28563e;
+}
+
+.btn-delete {
+    background: #fce8e8;
+    color: #c0392b;
+}
+
+.btn-edit:hover {
+    background: #28563e;
+    color: white;
+}
+
+.btn-delete:hover {
+    background: #c0392b;
+    color: white;
+}
+
+@media(max-width: 768px) {
+    .guru-header {
         padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    ">
+    }
 
-        <h3 style="margin-bottom: 15px;">Data Guru</h3>
-
-        <table style="
-            width: 100%;
-            border-collapse: collapse;
-        ">
-
-            <tr style="background: #000000; color: white;">
-
-                <th style="padding: 12px;">No</th>
-                <th style="padding: 12px;">Nama Guru</th>
-                <th style="padding: 12px;">NIP</th>
-                <th style="padding: 12px;">Mata Pelajaran</th>
-                <th style="padding: 12px;">Foto</th>
-
-            </tr>
-
-            @foreach ($guru as $data)
-
-            <tr style="border-bottom: 1px solid #ddd;">
-
-                <td style="padding: 12px;">
-                    {{ $loop->iteration }}
-                </td>
-
-                <td style="padding: 12px;">
-                    {{ $data->nama_guru }}
-                </td>
-
-                <td style="padding: 12px;">
-                    {{ $data->nip }}
-                </td>
-
-                <td style="padding: 12px;">
-                    {{ $data->mapel }}
-                </td>
-
-                <td style="padding: 12px;">
-                    {{ $data->foto }}
-                </td>
-
-            </tr>
-
-            @endforeach
-
-        </table>
-
-    </div>
-
-</div> --}}
-
+    .guru-card {
+        padding: 15px;
+    }
+}
+</style>
 @endsection

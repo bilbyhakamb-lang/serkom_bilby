@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>SMA 7 TASIKMALAYA | @yield('title')</title>
+    <title>SMAN 7 TASIKMALAYA | @yield('title')</title>
 
     <!-- SEO Optimization -->
     <meta name="description" content="KasFlow - Dashboard Administrasi">
@@ -44,7 +44,7 @@
                 <a href="#"
                   class="sidebar-menu-link">
                     <i class="bi bi-house-fill"></i>
-                    <span>SMN 7 TASIKMALAYA</span>
+                    <span>SMAN 7 TASIKMALAYA</span>
                 </a>
             </li>
                 <li class="sidebar-menu-item">
@@ -143,7 +143,6 @@
   <div class="main-wrapper">
 
     <!-- START: Top Navbar Component -->
-    <header class="navbar-custom">
       <div class="navbar-left">
         <!-- Desktop sidebar toggle (visible on large screens only) -->
         <!-- Quick Actions Dropdown -->

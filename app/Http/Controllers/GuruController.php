@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Guru;
-use App\Http\Requests\StoreGuruRequest;
-use App\Http\Requests\UpdateGuruRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Contracts\Encryption\DecryptException;
 
 class GuruController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Menampilkan data guru
     public function index()
     {
         $guru = Guru::all();
@@ -18,60 +18,112 @@ class GuruController extends Controller
         return view('guru.guru', compact('guru'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // Menampilkan form tambah guru
     public function create()
     {
-        //
+        $guru = new Guru();
+        $title = 'Tambah Guru';
+
+        return view('guru.add-edit', compact('guru', 'title'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreGuruRequest $request)
+    // Menyimpan data guru
+    public function store(Request $request)
     {
-        Guru::create($request->validated());
+        $request->validate([
+            'nama_guru' => 'required|string|max:40',
+            'nip' => 'required|string|max:15',
+            'mapel' => 'required|string|max:40',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
 
-        return redirect()->route('guru.index')
+        $data = $request->only([
+            'nama_guru',
+            'nip',
+            'mapel',
+        ]);
+
+        if ($request->hasFile('foto')) {
+            $data['foto'] = $request->file('foto')
+                ->store('guru', 'public');
+        }
+
+        Guru::create($data);
+
+        return redirect()->route('admin.guru')
             ->with('success', 'Data guru berhasil ditambahkan.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Guru $guru)
+    // Mendekripsi ID guru
+    private function decryptId($id)
     {
-        //
+        try {
+            return Crypt::decryptString($id);
+        } catch (DecryptException $e) {
+            abort(404, 'ID guru tidak valid.');
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Guru $guru)
+    // Menampilkan form edit guru
+    public function edit($id)
     {
-        return view('admin.guru.edit', compact('guru'));
+        $id = $this->decryptId($id);
+
+        $guru = Guru::findOrFail($id);
+        $title = 'Edit Guru';
+
+        return view('guru.add-edit', compact('guru', 'title'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateGuruRequest $request, Guru $guru)
+    // Memperbarui data guru
+    public function update(Request $request, $id)
     {
-        $guru->update($request->validated());
+        $id = $this->decryptId($id);
 
-        return redirect()->route('guru.index')
+        $guru = Guru::findOrFail($id);
+
+        $request->validate([
+            'nama_guru' => 'required|string|max:40',
+            'nip' => 'required|string|max:15',
+            'mapel' => 'required|string|max:40',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
+
+        $data = $request->only([
+            'nama_guru',
+            'nip',
+            'mapel',
+        ]);
+
+        if ($request->hasFile('foto')) {
+            if ($guru->foto) {
+                Storage::disk('public')->delete($guru->foto);
+            }
+
+            $data['foto'] = $request->file('foto')
+                ->store('guru', 'public');
+        }
+
+        $guru->update($data);
+
+        return redirect()->route('admin.guru')
             ->with('success', 'Data guru berhasil diubah.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Guru $guru)
+    // Menghapus data guru
+    public function destroy($id)
     {
+        $id = $this->decryptId($id);
+
+        $guru = Guru::findOrFail($id);
+
+        if ($guru->foto) {
+            Storage::disk('public')->delete($guru->foto);
+        }
+
         $guru->delete();
 
-        return redirect()->route('guru.index')
+        return redirect()->route('admin.guru')
             ->with('success', 'Data guru berhasil dihapus.');
     }
 }

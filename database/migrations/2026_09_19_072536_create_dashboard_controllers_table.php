@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dashboard_controllers', function (Blueprint $table) {
+        Schema::create('dashboard_controller', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
         });
@@ -22,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dashboard_controllers');
+        Schema::dropIfExists('dashboard_controller');
     }
 };

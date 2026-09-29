@@ -5,14 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Login - KasFlow</title>
+    <title>SMAN 7 TASIKMALAYA</title>
 
     <!-- SEO -->
     <meta name="description" content="Login KasFlow Dashboard Administrasi">
     <meta name="author" content="KasFlow Team">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="{{ asset('assets/images/favicon.ico') }}">
+    <link rel="icon" type="images/png"href="{{ asset('assets/images/sma7.png') }}">
+    
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{{ asset('assets/libs/bootstrap/css/bootstrap.min.css') }}">
@@ -43,7 +44,7 @@
             </a>
 
             <p class="login-subtitle">
-                Please sign in to access your dashboard
+                Please sign in to access your dashboar  d
             </p>
 
             <!-- Login Form -->

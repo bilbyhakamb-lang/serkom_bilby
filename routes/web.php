@@ -21,6 +21,8 @@ Route::get('/login', function () {
 
 Route::post('/login', [AuthController::class, 'processLogin'])->name('login.process');
 
+// Profil Sekolah
+Route::get('/profile', [ProfileSekolahController::class, 'index'])->name('admin.profile');
 Route::post('/admin/profil-sekolah/save', [ProfileSekolahController::class, 'save'])->name('admin.profil-sekolah.save');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.dashboard');
@@ -32,9 +34,27 @@ Route::get('/galeri', [GaleriController::class, 'index'])->name('admin.galeri');
 Route::get('/guru', [GuruController::class, 'index'])->name('admin.guru');
 Route::post('/guru', [GuruController::class, 'store'])->name('guru.store');
 
+// CRUD Guru
+Route::get('/guru', [GuruController::class, 'index']) ->name('admin.guru');
+Route::get('/guru/create', [GuruController::class, 'create'])->name('guru.create');
+Route::post('/guru', [GuruController::class, 'store'])->name('guru.store');
+Route::get('/guru/{id}/edit', [GuruController::class, 'edit'])->name('guru.edit');
+Route::put('/guru/{id}', [GuruController::class, 'update'])->name('guru.update');
+Route::delete('/guru/{id}', [GuruController::class, 'destroy'])->name('guru.destroy');
+
 // CRUD Siswa
 Route::get('/siswa', [SiswaController::class, 'index'])->name('admin.siswa');
 Route::post('/siswa', [SiswaController::class, 'store'])->name('siswa.store');
 Route::get('/siswa/form/{id?}', [SiswaController::class, 'addEdit'])->name('siswa.form');
 Route::put('/siswa/update/{id}', [SiswaController::class, 'update'])->name('siswa.update');
 Route::delete('/siswa/delete/{id}', [SiswaController::class, 'destroy'])->name('siswa.destroy');
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/berita', [BeritaController::class, 'index'])->name('admin.berita');
+    Route::get('/berita/create', [BeritaController::class, 'create'])->name('berita.create');
+    Route::post('/berita', [BeritaController::class, 'store'])->name('berita.store');
+    Route::get('/berita/{berita}/edit', [BeritaController::class, 'edit'])->name('berita.edit');
+    Route::put('/berita/{berita}', [BeritaController::class, 'update'])->name('berita.update');
+    Route::delete('/berita/{berita}', [BeritaController::class, 'destroy'])->name('berita.destroy');
+});
