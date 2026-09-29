@@ -3,7 +3,7 @@
 @section('content')
 <th>Ini Halaman Guru</th>
 
-<div class="container">
+{{-- <div class="container">
 
     <h2 style="margin-bottom: 20px;">Kelola Data Guru</h2>
 
@@ -129,6 +129,6 @@
 
     </div>
 
-</div>
+</div> --}}
 
 @endsection

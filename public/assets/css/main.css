@@ -3468,6 +3468,13 @@ a:hover { color: #4435c5; }
     margin-bottom: 12px;
 }
 
+.logo-sekolah {
+    width: 170px;
+    height: 200px;
+    object-fit: contain;
+    display: block;
+}
+
 /* Remove the old lime visual language */
 .text-lime, .text-success-lime { color: #5b4ce6 !important; }
 .bg-lime, .bg-success-lime { background: #eeeafd !important; }

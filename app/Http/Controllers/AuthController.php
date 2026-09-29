@@ -2,65 +2,49 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Auth;
-use App\Http\Requests\StoreAuthRequest;
-use App\Http\Requests\UpdateAuthRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return view('login.login');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function processLogin(Request $request)
     {
-        //
+        $credentials = $request->validate(
+            [
+                'email' => 'required|email',
+                'password' => 'required'
+            ],
+            [
+                'email.required' => 'Email wajib diisi.',
+                'email.email' => 'Format email tidak valid.',
+                'password.required' => 'Password wajib diisi.',
+            ]
+        );
+
+         if (Auth::attempt($credentials)) {
+             $request->session()->regenerate();
+
+            return redirect()->route('dashboard.dashboard')
+                ->with('success', 'Selamat datang kembali, ' . Auth::user()->name . '!');
+        }
+
+        return back()->withErrors(
+            [
+                'email' => 'Kombinasi alamat email atau kata sandi tidak sesuai.',
+            ]
+        )->onlyInput('email');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreAuthRequest $request)
+    public function logout(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Auth $auth)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Auth $auth)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateAuthRequest $request, Auth $auth)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Auth $auth)
-    {
-        //
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('public.dashboard')->with('success', 'Anda telah berhasil keluar dari sistem.');
     }
 }

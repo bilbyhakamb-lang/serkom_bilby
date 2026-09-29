@@ -2,26 +2,29 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SMA 7 TASIKMALAYA | @yield('title')</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- SEO Optimization -->
-  <meta name="description" content="KasFlow - Dashboard Administrasi">
-  <meta name="author" content="KasFlow Team">
+    <title>SMA 7 TASIKMALAYA | @yield('title')</title>
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="assets/images/favicon.ico">
+    <!-- SEO Optimization -->
+    <meta name="description" content="KasFlow - Dashboard Administrasi">
+    <meta name="author" content="KasFlow Team">
 
-  <!-- Local Third-Party Libraries (100% Offline Compatible) -->
-  <link rel="stylesheet" href="assets/libs/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="assets/libs/bootstrap-icons/bootstrap-icons.css">
-  <link rel="stylesheet" href="assets/libs/apexcharts/apexcharts.css">
-  <link rel="stylesheet" href="assets/libs/flatpickr/
-  .min.css">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{{ asset('assets/libs/bootstrap/css/bootstrap.min.css') }}">
 
-  <!-- Main Design System & Custom Stylesheet -->
-  <link rel="stylesheet" href="assets/css/main.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="{{ asset('assets/libs/bootstrap-icons/bootstrap-icons.css') }}">
+
+    <!-- ApexCharts -->
+    <link rel="stylesheet" href="{{ asset('assets/libs/apexcharts/apexcharts.css') }}">
+
+    <!-- Flatpickr -->
+    <link rel="stylesheet" href="{{ asset('assets/libs/flatpickr/flatpickr.min.css') }}">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
 </head>
 
 <body>
@@ -38,15 +41,15 @@
     <div class="sidebar-menu-section">
         <ul class="sidebar-menu-list">
             <li class="sidebar-menu-item">
-                <a href="{{ url('/') }}"
-                  class="sidebar-menu-link {{ request()->is('/') ? 'active' : '' }}">
+                <a href="#"
+                  class="sidebar-menu-link">
                     <i class="bi bi-house-fill"></i>
                     <span>SMN 7 TASIKMALAYA</span>
                 </a>
             </li>
                 <li class="sidebar-menu-item">
-                  <a href="{{ route('admin.dashboard') }}"
-                    class="sidebar-menu-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                  <a href="{{ route('dashboard.dashboard') }}"
+                    class="sidebar-menu-link {{ request()->routeIs('dashboard.dashboard') ? 'active' : '' }}">
                       <i class="bi bi-images"></i>
                       <span>Dashboard</span>
                   </a>
@@ -259,11 +262,11 @@
     <footer class="footer-custom">
       <div class="footer-left">
         <span class="footer-logo">
-          <i class="bi bi-asterisk"></i> KasFlow
+          <i class="bi bi-asterisk"></i> ProfileSekolah
         </span>
         <span class="footer-separator">|</span>
         <span class="footer-copy">&copy; 2026 Made with <i class="bi bi-heart-fill text-danger footer-heart"></i> by<a
-            href="https://sparkadminpro.gumroad.com/" target="_blank">KasFlow</a>• Distributed by <a
+            href="https://sparkadminpro.gumroad.com/" target="_blank">ProfileSekolah</a>• Distributed by <a
             href="https://www.themewagon.com/" target="_blank">ThemeWagon</a> </span>
       </div>
       <div class="footer-right">
