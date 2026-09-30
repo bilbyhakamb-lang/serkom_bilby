@@ -3,64 +3,111 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ekstrakulikuler;
-use App\Http\Requests\StoreEkstrakulikulerRequest;
-use App\Http\Requests\UpdateEkstrakulikulerRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class EkstrakulikulerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Menampilkan data ekstrakurikuler
     public function index()
     {
-        return view('eskul.eskul');
+        $eskul = Ekstrakulikuler::all();
+
+        return view('eskul.eskul', compact('eskul'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // Form tambah ekstrakurikuler
     public function create()
     {
-        //
+        $eskul = new Ekstrakulikuler();
+        $title = 'Tambah Ekstrakurikuler';
+
+        return view('eskul.add-edit', compact('eskul', 'title'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreEkstrakulikulerRequest $request)
+    // Menyimpan data ekstrakurikuler
+    public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama_ekskul'    => 'required|string|max:40',
+            'pembina'        => 'required|string|max:40',
+            'jadwal_latihan' => 'required|string|max:40',
+            'deskripsi'      => 'required|string',
+            'gambar'         => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
+
+        $data = $request->only([
+            'nama_ekskul',
+            'pembina',
+            'jadwal_latihan',
+            'deskripsi',
+        ]);
+
+        $data['gambar'] = $request->file('gambar')
+            ->store('ekstrakurikuler', 'public');
+
+        Ekstrakulikuler::create($data);
+
+        return redirect()->route('admin.ekstrakulikuler')
+            ->with('success', 'Data ekstrakurikuler berhasil ditambahkan.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Ekstrakulikuler $ekstrakulikuler)
+    // Form edit ekstrakurikuler
+    public function edit($id)
     {
-        //
+        $eskul = Ekstrakulikuler::findOrFail($id);
+        $title = 'Edit Ekstrakurikuler';
+
+        return view('eskul.add-edit', compact('eskul', 'title'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Ekstrakulikuler $ekstrakulikuler)
+    // Memperbarui data ekstrakurikuler
+    public function update(Request $request, $id)
     {
-        //
+        $eskul = Ekstrakulikuler::findOrFail($id);
+
+        $request->validate([
+            'nama_ekskul'    => 'required|string|max:40',
+            'pembina'        => 'required|string|max:40',
+            'jadwal_latihan' => 'required|string|max:40',
+            'deskripsi'      => 'required|string',
+            'gambar'         => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
+
+        $data = $request->only([
+            'nama_ekskul',
+            'pembina',
+            'jadwal_latihan',
+            'deskripsi',
+        ]);
+
+        if ($request->hasFile('gambar')) {
+            if ($eskul->gambar) {
+                Storage::disk('public')->delete($eskul->gambar);
+            }
+
+            $data['gambar'] = $request->file('gambar')
+                ->store('ekstrakurikuler', 'public');
+        }
+
+        $eskul->update($data);
+
+        return redirect()->route('admin.ekstrakulikuler')
+            ->with('success', 'Data ekstrakurikuler berhasil diperbarui.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateEkstrakulikulerRequest $request, Ekstrakulikuler $ekstrakulikuler)
+    // Menghapus data ekstrakurikuler
+    public function destroy($id)
     {
-        //
-    }
+        $eskul = Ekstrakulikuler::findOrFail($id);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Ekstrakulikuler $ekstrakulikuler)
-    {
-        //
+        if ($eskul->gambar) {
+            Storage::disk('public')->delete($eskul->gambar);
+        }
+
+        $eskul->delete();
+
+        return redirect()->route('admin.ekstrakulikuler')
+            ->with('success', 'Data ekstrakurikuler berhasil dihapus.');
     }
 }

@@ -29,12 +29,17 @@ class GuruController extends Controller
 
     // Menyimpan data guru
     public function store(Request $request)
-    {
+{
         $request->validate([
             'nama_guru' => 'required|string|max:40',
             'nip' => 'required|string|max:15',
             'mapel' => 'required|string|max:40',
             'foto' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ], [
+            'foto.required' => 'Foto guru wajib diisi.',
+            'foto.image' => 'File harus berupa gambar.',
+            'foto.mimes' => 'Format foto harus JPG, JPEG, PNG, atau WEBP.',
+            'foto.max' => 'Ukuran foto maksimal 2 MB.',
         ]);
 
         $data = $request->only([
@@ -43,16 +48,14 @@ class GuruController extends Controller
             'mapel',
         ]);
 
-        if ($request->hasFile('foto')) {
-            $data['foto'] = $request->file('foto')
-                ->store('guru', 'public');
-        }
+    $data['foto'] = $request->file('foto')
+        ->store('guru', 'public');
 
-        Guru::create($data);
+    Guru::create($data);
 
-        return redirect()->route('admin.guru')
-            ->with('success', 'Data guru berhasil ditambahkan.');
-    }
+    return redirect()->route('admin.guru')
+        ->with('success', 'Data guru berhasil ditambahkan.');
+}
 
     // Mendekripsi ID guru
     private function decryptId($id)
@@ -79,7 +82,6 @@ class GuruController extends Controller
     public function update(Request $request, $id)
     {
         $id = $this->decryptId($id);
-
         $guru = Guru::findOrFail($id);
 
         $request->validate([
@@ -87,34 +89,43 @@ class GuruController extends Controller
             'nip' => 'required|string|max:15',
             'mapel' => 'required|string|max:40',
             'foto' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-        ]);
+            'hapus_foto' => 'nullable|boolean',
+    ]);
 
         $data = $request->only([
             'nama_guru',
             'nip',
             'mapel',
-        ]);
+    ]);
 
-        if ($request->hasFile('foto')) {
-            if ($guru->foto) {
-                Storage::disk('public')->delete($guru->foto);
-            }
-
-            $data['foto'] = $request->file('foto')
-                ->store('guru', 'public');
+    // Jika memilih foto baru
+    if ($request->hasFile('foto')) {
+        if ($guru->foto) {
+            Storage::disk('public')->delete($guru->foto);
         }
 
-        $guru->update($data);
+        $data['foto'] = $request->file('foto')
+            ->store('guru', 'public');
+    }
+    // Jika ingin menghapus foto lama
+        elseif ($request->boolean('hapus_foto')) {
+            if ($guru->foto) {
+             Storage::disk('public')->delete($guru->foto);
+        }
 
-        return redirect()->route('admin.guru')
-            ->with('success', 'Data guru berhasil diubah.');
+        $data['foto'] = null;
+    }
+
+    $guru->update($data);
+
+    return redirect()->route('admin.guru')
+        ->with('success', 'Data guru berhasil diubah.');
     }
 
     // Menghapus data guru
     public function destroy($id)
     {
         $id = $this->decryptId($id);
-
         $guru = Guru::findOrFail($id);
 
         if ($guru->foto) {

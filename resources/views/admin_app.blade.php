@@ -76,7 +76,7 @@
                 <!-- Guru -->
                 <li class="sidebar-menu-item">
                   <a href="{{ route('admin.guru') }}"
-                    class="sidebar-menu-link {{ request()->routeIs('admin.guru') ? 'active' : '' }}">
+                    class="sidebar-menu-link {{ request()->routeIs('admin.guru', 'guru.create', 'guru.edit', 'guru.update') ? 'active' : '' }}">
                       <i class="bi bi-person-gear"></i>
                       <span>Kelola Guru</span>
                   </a>
@@ -105,7 +105,7 @@
                 <!-- Ekstrakulikuler -->
                 <li class="sidebar-menu-item">
                     <a href="{{ route('admin.ekstrakulikuler') }}"
-                      class="sidebar-menu-link {{ request()->routeIs('admin.ekstrakulikuler') ? 'active' : '' }}">
+                      class="sidebar-menu-link {{ request()->routeIs('admin.ekstrakulikuler', 'eskul.*') ? 'active' : '' }}">
                         <i class="bi bi-trophy"></i>
                         <span>Kelola Ekstrakulikuler</span>
                     </a>

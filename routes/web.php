@@ -58,3 +58,19 @@ Route::middleware('auth')->group(function () {
     Route::put('/berita/{berita}', [BeritaController::class, 'update'])->name('berita.update');
     Route::delete('/berita/{berita}', [BeritaController::class, 'destroy'])->name('berita.destroy');
 });
+
+// CRUD Ekstrakulikuler
+Route::get('/ekstrakulikuler', [EkstrakulikulerController::class, 'index'])->name('admin.ekstrakulikuler');
+Route::get('/eskul/tambah', [EkstrakulikulerController::class, 'create'])->name('eskul.create');
+Route::post('/eskul', [EkstrakulikulerController::class, 'store']) ->name('eskul.store');
+Route::get('/eskul/{id}/edit', [EkstrakulikulerController::class, 'edit'])->name('eskul.edit');
+Route::put('/eskul/{id}', [EkstrakulikulerController::class, 'update'])->name('eskul.update');
+Route::delete('/eskul/{id}', [EkstrakulikulerController::class, 'destroy'])->name('eskul.destroy');
+
+// CRUD Galeri
+Route::get('/galeri', [GaleriController::class, 'index'])->name('admin.galeri');
+Route::get('/galeri/create', [GaleriController::class, 'create'])->name('galeri.create');
+Route::post('/galeri', [GaleriController::class, 'store']) ->name('galeri.store');
+Route::get('/galeri/{id}/edit', [GaleriController::class, 'edit']) ->name('galeri.edit');
+Route::put('/galeri/{id}', [GaleriController::class, 'update'])->name('galeri.update');
+Route::delete('/galeri/{id}', [GaleriController::class, 'destroy'])->name('galeri.destroy');

@@ -1,4 +1,7 @@
 @extends('admin_app')
+@php
+    use Illuminate\Support\Facades\Crypt;
+@endphp
 
 @section('title', 'Kelola Guru')
 
@@ -100,15 +103,15 @@
                                 <div class="d-flex justify-content-center gap-2">
 
                                     <!-- TOMBOL EDIT -->
-                                    <a href="{{ route('guru.edit', $item->id_guru) }}"
-                                       class="btn btn-sm btn-edit"
-                                       title="Edit">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
+                                <a href="{{ route('guru.edit', Crypt::encryptString($item->id_guru)) }}"
+                                    class="btn btn-sm btn-edit"
+                                    title="Edit">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
 
                                     <!-- TOMBOL HAPUS -->
                                     <form
-                                        action="{{ route('guru.destroy', $item->id_guru) }}"
+                                        action="{{ route('guru.destroy', Crypt::encryptString((string) $item->id_guru)) }}"
                                         method="POST"
                                         onsubmit="return confirm('Yakin ingin menghapus data guru ini?')">
 
