@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Ekstrakulikuler;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Contracts\Encryption\DecryptException;
 
 class EkstrakulikulerController extends Controller
 {
@@ -14,6 +16,22 @@ class EkstrakulikulerController extends Controller
         $eskul = Ekstrakulikuler::all();
 
         return view('eskul.eskul', compact('eskul'));
+    }
+
+    // Menampilkan detail ekstrakurikuler
+    public function show($id)
+    {
+        try {
+            $idEskul = Crypt::decryptString($id);
+        }   catch (DecryptException $e) {
+            abort(404);
+        }
+
+        $eskul = Ekstrakulikuler::findOrFail($idEskul);
+        $ekstrakurikuler = $eskul;
+        $title = 'Detail Ekstrakurikuler';
+
+        return view('eskul.detail', compact('eskul', 'ekstrakurikuler', 'title'));
     }
 
     // Form tambah ekstrakurikuler

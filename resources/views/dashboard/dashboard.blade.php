@@ -11,6 +11,7 @@
         margin: 0;
         padding: 30px;
         box-sizing: border-box;
+        color: #26352d;
     }
 
     .dashboard-header {
@@ -110,6 +111,7 @@
         margin: 0 0 16px;
     }
 
+    /* STATISTIK */
     .dashboard-stats {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -169,6 +171,164 @@
         margin: 0;
     }
 
+    /* BERITA TERBARU */
+    .berita-section {
+        margin-bottom: 28px;
+    }
+
+    .berita-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+
+    .berita-header .section-title {
+        margin-bottom: 5px;
+    }
+
+    .berita-subtitle {
+        margin: 0;
+        font-size: 12px;
+        color: #879088;
+    }
+
+    .btn-semua-berita {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 9px 13px;
+        border: 1px solid #285943;
+        border-radius: 8px;
+        color: #285943;
+        background: #fff;
+        font-size: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: .2s;
+    }
+
+    .btn-semua-berita:hover {
+        background: #285943;
+        color: #fff;
+    }
+
+    .berita-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+    }
+
+    .berita-card {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        overflow: hidden;
+        border: 1px solid #e8ede9;
+        border-radius: 13px;
+        background: #fff;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, .035);
+        transition: transform .2s, box-shadow .2s;
+    }
+
+    .berita-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 7px 18px rgba(0, 0, 0, .07);
+    }
+
+    .berita-image {
+        width: 100%;
+        height: 175px;
+        object-fit: cover;
+        background: #edf5ef;
+    }
+
+    .berita-image-placeholder {
+        width: 100%;
+        height: 175px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #edf5ef;
+        color: #39865a;
+        font-size: 42px;
+    }
+
+    .berita-body {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        padding: 17px;
+    }
+
+    .berita-tanggal {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 9px;
+        color: #879088;
+        font-size: 11px;
+    }
+
+    .berita-judul {
+        margin: 0 0 9px;
+        color: #29382e;
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1.5;
+        overflow-wrap: anywhere;
+    }
+
+    .berita-ringkasan {
+        margin: 0 0 16px;
+        color: #7b857e;
+        font-size: 12px;
+        line-height: 1.7;
+    }
+
+    .btn-detail-berita {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        align-self: flex-start;
+        gap: 6px;
+        margin-top: auto;
+        padding: 8px 12px;
+        border-radius: 7px;
+        background: #285943;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: .2s;
+    }
+
+    .btn-detail-berita:hover {
+        background: #18392b;
+        color: #fff;
+    }
+
+    .berita-kosong {
+        grid-column: 1 / -1;
+        padding: 35px 15px;
+        text-align: center;
+        border: 1px dashed #dce6de;
+        border-radius: 12px;
+        background: #fff;
+        color: #879088;
+        font-size: 13px;
+    }
+
+    .berita-kosong i {
+        display: block;
+        margin-bottom: 9px;
+        color: #39865a;
+        font-size: 30px;
+    }
+
+    /* AKSES CEPAT */
     .quick-section {
         margin-bottom: 25px;
     }
@@ -255,7 +415,8 @@
     }
 
     @media (max-width: 900px) {
-        .quick-grid {
+        .quick-grid,
+        .berita-grid {
             grid-template-columns: repeat(2, minmax(0, 1fr));
         }
     }
@@ -306,9 +467,14 @@
             font-size: 23px;
         }
 
-        .quick-grid {
+        .quick-grid,
+        .berita-grid {
             grid-template-columns: 1fr;
             gap: 12px;
+        }
+
+        .berita-header {
+            align-items: flex-start;
         }
     }
 
@@ -316,16 +482,22 @@
         .welcome-icon {
             display: none;
         }
+
+        .berita-header {
+            flex-direction: column;
+        }
     }
 </style>
 
 <div class="dashboard-page">
 
+    <!-- HEADER -->
     <div class="dashboard-header">
         <h2>Dashboard</h2>
         <p>Ringkasan informasi dan pengelolaan data sekolah.</p>
     </div>
 
+    <!-- WELCOME -->
     <div class="dashboard-welcome">
         <div class="welcome-content">
             <span class="welcome-label">SISTEM INFORMASI SEKOLAH</span>
@@ -341,6 +513,7 @@
         </div>
     </div>
 
+    <!-- STATISTIK -->
     <h4 class="section-title">Statistik Sekolah</h4>
 
     <div class="dashboard-stats">
@@ -367,6 +540,77 @@
 
     </div>
 
+    <!-- BERITA TERBARU -->
+    <div class="berita-section">
+
+        <div class="berita-header">
+            <div>
+                <h4 class="section-title">Berita Terbaru</h4>
+                <p class="berita-subtitle">
+                    Informasi dan berita terbaru sekolah.
+                </p>
+            </div>
+
+            <a href="{{ route('admin.berita') }}"
+               class="btn-semua-berita">
+                Lihat Semua
+                <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+
+        <div class="berita-grid">
+
+            @forelse ($beritaTerbaru as $item)
+                <div class="berita-card">
+
+                    <!-- GAMBAR BERITA -->
+                    @if ($item->gambar)
+                        <img
+                            src="{{ asset('storage/' . $item->gambar) }}"
+                            alt="{{ $item->judul }}"
+                            class="berita-image">
+                    @else
+                        <div class="berita-image-placeholder">
+                            <i class="bi bi-newspaper"></i>
+                        </div>
+                    @endif
+
+                    <!-- ISI BERITA -->
+                    <div class="berita-body">
+
+                        <div class="berita-tanggal">
+                            <i class="bi bi-calendar3"></i>
+                            {{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}
+                        </div>
+
+                        <h5 class="berita-judul">
+                            {{ $item->judul }}
+                        </h5>
+
+                        <p class="berita-ringkasan">
+                            {{ \Illuminate\Support\Str::limit(strip_tags($item->isi), 100) }}
+                        </p>
+
+                        <!-- TOMBOL DETAIL -->
+                        <a href="{{ route('admin.berita.detail', encrypt($item->id_berita)) }}"
+                           class="btn-detail-berita">
+                            <i class="bi bi-eye"></i>
+                            Detail Berita
+                        </a>
+
+                    </div>
+                </div>
+            @empty
+                <div class="berita-kosong">
+                    <i class="bi bi-newspaper"></i>
+                    Belum ada berita yang tersedia.
+                </div>
+            @endforelse
+
+        </div>
+    </div>
+
+    <!-- AKSES CEPAT -->
     <div class="quick-section">
         <h4 class="section-title">Akses Cepat</h4>
 
@@ -441,6 +685,7 @@
         </div>
     </div>
 
+    <!-- CATATAN -->
     <div class="dashboard-note">
         <i class="bi bi-info-circle-fill"></i>
         <span>

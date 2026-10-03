@@ -79,13 +79,13 @@ class GaleriController extends Controller
         return false;
     }
 
-    // Mendekripsi ID galeri
-    private function decryptId($id)
+    // Mendekripsi ID ekstrakurikuler
+private function decryptId($id)
     {
         try {
             return Crypt::decryptString($id);
-        } catch (DecryptException $e) {
-            abort(404, 'ID galeri tidak valid.');
+        }   catch (DecryptException $e) {
+            abort(404, 'ID ekstrakurikuler tidak valid.');
         }
     }
 
@@ -154,10 +154,15 @@ class GaleriController extends Controller
             ->with('success', 'Data galeri berhasil diperbarui.');
     }
 
-    // Menampilkan detail (kembali ke daftar jika halaman detail belum dibuat)
-    public function show(Galeri $galeri)
+    // Menampilkan detail galeri
+    public function show($id)
     {
-        return redirect()->route('admin.galeri');
+        $id = $this->decryptId($id);
+
+        $galeri = Galeri::findOrFail($id);
+        $title = 'Detail Galeri';
+
+        return view('galeri.detail', compact('galeri', 'title'));
     }
 
     // Menghapus data galeri

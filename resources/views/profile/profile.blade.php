@@ -1,407 +1,508 @@
 @extends('admin_app')
 
-@section('title', 'Profil Sekolah')
+@section('title', 'Profile Sekolah')
+
+@push('styles')
+<style>
+    /* ============ HEADER BANNER ============ */
+    .profil-header {
+        background: linear-gradient(135deg, #18392b, #32634a);
+        color: white;
+        padding: 28px 32px;
+        border-radius: 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+    }
+
+    .profil-header h2 {
+        font-size: 24px;
+        font-weight: 700;
+        margin: 0 0 6px;
+    }
+
+    .profil-header p {
+        margin: 0;
+        color: #dce9df;
+        font-size: 14px;
+    }
+
+    .profil-header .header-icon {
+        font-size: 46px;
+        opacity: .85;
+    }
+
+    /* ============ CARD ============ */
+    .profil-card {
+        background: #fff;
+        border-radius: 14px;
+        padding: 25px 30px;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, .06);
+        margin-bottom: 20px;
+    }
+
+    .profil-card-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: #263b30;
+        margin: 0 0 20px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #edf4ef;
+    }
+
+    .profil-card-title i {
+        color: #28563e;
+    }
+
+    /* ============ IDENTITAS ============ */
+    .sekolah-identitas {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+        background: #f7fbf8;
+        border-radius: 12px;
+        margin-bottom: 20px;
+    }
+
+    .sekolah-logo {
+        width: 84px;
+        height: 84px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #d9e8dc;
+        background: #fff;
+    }
+
+    .sekolah-logo-placeholder {
+        width: 84px;
+        height: 84px;
+        border-radius: 50%;
+        background: #edf4ef;
+        color: #32634a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 38px;
+        border: 3px solid #d9e8dc;
+        flex-shrink: 0;
+    }
+
+    .sekolah-nama {
+        font-size: 20px;
+        font-weight: 700;
+        color: #18392b;
+        margin: 0 0 4px;
+    }
+
+    .sekolah-sub {
+        color: #6b7d72;
+        font-size: 13px;
+        margin: 0;
+    }
+
+    /* ============ INFO GRID ============ */
+    .info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px 24px;
+        margin-bottom: 20px;
+    }
+
+    .info-item {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .info-label {
+        font-size: 12px;
+        color: #7b857e;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: .3px;
+    }
+
+    .info-value {
+        font-size: 14px;
+        color: #26352d;
+        font-weight: 500;
+        background: #f7fbf8;
+        border: 1px solid #e7ebe8;
+        border-radius: 8px;
+        padding: 10px 14px;
+        min-height: 42px;
+        display: flex;
+        align-items: center;
+        word-break: break-word;
+    }
+
+    .info-value.textarea {
+        align-items: flex-start;
+        padding-top: 12px;
+        min-height: 90px;
+        white-space: pre-line;
+    }
+
+    /* ============ FOTO SEKOLAH ============ */
+    .foto-sekolah-wrap {
+        margin-top: 6px;
+    }
+
+    .foto-sekolah {
+        width: 100%;
+        max-height: 260px;
+        border-radius: 12px;
+        object-fit: cover;
+        border: 1px solid #e7ebe8;
+    }
+
+    .foto-placeholder {
+        width: 100%;
+        height: 200px;
+        border-radius: 12px;
+        background: #f7fbf8;
+        border: 2px dashed #d9e8dc;
+        color: #8fa398;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .foto-placeholder i {
+        font-size: 40px;
+    }
+
+    /* ============ BUTTON ============ */
+    .btn-edit-profil {
+        background: #28563e;
+        color: white;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-weight: 600;
+        font-size: 14px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        border: none;
+        transition: .2s;
+    }
+
+    .btn-edit-profil:hover {
+        background: #18392b;
+        color: white;
+    }
+
+    /* ============ RESPONSIVE ============ */
+    @media (max-width: 768px) {
+        .profil-header {
+            padding: 20px;
+        }
+
+        .profil-card {
+            padding: 20px;
+        }
+
+        .info-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .sekolah-identitas {
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+</style>
+@endpush
 
 @section('content')
 <div class="container-fluid py-4">
 
     <!-- HEADER -->
-    <div class="profile-header mb-4">
+    <div class="profil-header">
         <div>
-            <h2>Profil Sekolah</h2>
+            <h2>Profile Sekolah</h2>
             <p>Kelola informasi dan identitas sekolah.</p>
         </div>
-        <div class="profile-icon">
-            <i class="bi bi-building"></i>
-        </div>
+
+        <i class="bi bi-bank2 header-icon"></i>
     </div>
 
-    <!-- PESAN BERHASIL -->
+    <!-- NOTIFIKASI SUCCESS -->
     @if(session('success'))
-        <div class="alert alert-success">
+        <div class="alert alert-success alert-dismissible fade show"
+             role="alert"
+             id="success-alert">
+
+            <i class="bi bi-check-circle me-1"></i>
             {{ session('success') }}
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert">
+            </button>
         </div>
     @endif
 
-    <!-- PESAN ERROR -->
-    @if($errors->any())
-        <div class="alert alert-danger">
-            <ul class="mb-0">
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+    <!-- NOTIFIKASI ERROR -->
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show"
+             role="alert">
+
+            <i class="bi bi-exclamation-circle me-1"></i>
+            {{ session('error') }}
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert">
+            </button>
         </div>
     @endif
 
-    <!-- FORM -->
-    <form action="{{ route('admin.profil-sekolah.save') }}"
-          method="POST"
-          enctype="multipart/form-data">
-        @csrf
+    <div class="row g-4">
 
-        <div class="row g-4">
+        <!-- ================= KOLOM KIRI ================= -->
+        <div class="col-lg-5">
 
-            <!-- KARTU IDENTITAS -->
-            <div class="col-lg-4">
-                <div class="profile-card text-center">
+            <div class="profil-card">
 
-                    <!-- LOGO SEKOLAH -->
-                    <div class="school-logo">
-                        <img
-                            id="logoPreview"
-                            src="{{ $profilSekolah?->logo ? asset('storage/'.$profilSekolah->logo) : '' }}"
-                            alt="Logo Sekolah"
-                            style="{{ $profilSekolah?->logo ? '' : 'display:none;' }}"
-                        >
+                <h5 class="profil-card-title">
+                    <i class="bi bi-image"></i>
+                    Logo & Foto Sekolah
+                </h5>
 
-                        <i id="logoIcon"
-                           class="bi bi-building"
-                           style="{{ $profilSekolah?->logo ? 'display:none;' : '' }}">
-                        </i>
-                    </div>
+                <!-- IDENTITAS SEKOLAH -->
+                <div class="sekolah-identitas">
 
-                    <h4 id="namaPreview">
-                        {{ $profilSekolah?->nama_sekolah ?? 'Nama Sekolah' }}
-                    </h4>
+                    {{-- LOGO --}}
+                    @if($profilSekolah && !empty($profilSekolah->logo))
 
-                    <p class="text-muted mb-3">
-                        Profil dan Identitas Sekolah
-                    </p>
+                        <img src="{{ asset('storage/' . $profilSekolah->logo) }}"
+                             alt="Logo Sekolah"
+                             class="sekolah-logo">
 
-                    <!-- INPUT LOGO -->
-                    <div class="text-start">
-                        <label class="form-label">Logo Sekolah</label>
-                        <input type="file"
-                               name="logo"
-                               id="logoInput"
-                               class="form-control"
-                               accept=".jpg,.jpeg,.png,.webp">
+                    @else
 
-                        @error('logo')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
+                        <div class="sekolah-logo-placeholder">
+                            <i class="bi bi-bank"></i>
+                        </div>
 
-                    <hr>
+                    @endif
 
-                    <!-- INPUT FOTO -->
-                    <div class="text-start">
-                        <label class="form-label">Foto Sekolah</label>
-                        <input type="file"
-                               name="foto"
-                               id="fotoInput"
-                               class="form-control"
-                               accept=".jpg,.jpeg,.png,.webp">
+                    <div>
 
-                        @error('foto')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
+                        <h4 class="sekolah-nama">
+                            {{ $profilSekolah->nama_sekolah ?? 'Nama Sekolah' }}
+                        </h4>
 
-                    <!-- PREVIEW FOTO -->
-                    <div class="mt-3">
-                        <img
-                            id="fotoPreview"
-                            src="{{ $profilSekolah?->foto ? asset('storage/'.$profilSekolah->foto) : '' }}"
-                            alt="Foto Sekolah"
-                            class="school-photo"
-                            style="{{ $profilSekolah?->foto ? '' : 'display:none;' }}"
-                        >
+                        <p class="sekolah-sub">
+                            Profil dan Identitas Sekolah
+                        </p>
+
                     </div>
 
                 </div>
+
+                <!-- FOTO SEKOLAH -->
+                <div class="foto-sekolah-wrap">
+
+                    @if($profilSekolah && !empty($profilSekolah->foto))
+
+                        <img src="{{ asset('storage/' . $profilSekolah->foto) }}"
+                             alt="Foto Sekolah"
+                             class="foto-sekolah">
+
+                    @else
+
+                        <div class="foto-placeholder">
+
+                            <i class="bi bi-image"></i>
+
+                            <span>
+                                Belum ada foto sekolah
+                            </span>
+
+                        </div>
+
+                    @endif
+
+                </div>
+
             </div>
 
-            <!-- INFORMASI SEKOLAH -->
-            <div class="col-lg-8">
-                <div class="profile-card">
+        </div>
 
-                    <div class="card-heading">
+        <!-- ================= KOLOM KANAN ================= -->
+        <div class="col-lg-7">
+
+            <div class="profil-card">
+
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+
+                    <h5 class="profil-card-title mb-0"
+                        style="border-bottom:none; padding-bottom:0;">
+
                         <i class="bi bi-info-circle"></i>
-                        <h5>Informasi Sekolah</h5>
-                    </div>
+                        Informasi Sekolah
 
-                    <div class="row g-3">
+                    </h5>
 
-                        <!-- NAMA SEKOLAH -->
-                        <div class="col-md-6">
-                            <label class="form-label">Nama Sekolah</label>
-                            <input type="text"
-                                   name="nama_sekolah"
-                                   id="namaSekolah"
-                                   class="form-control"
-                                   value="{{ old('nama_sekolah', $profilSekolah?->nama_sekolah ?? '') }}"
-                                   required>
-                        </div>
+                    <a href="{{ route('profile.edit') }}"
+                       class="btn-edit-profil">
 
-                        <!-- KEPALA SEKOLAH -->
-                        <div class="col-md-6">
-                            <label class="form-label">Kepala Sekolah</label>
-                            <input type="text"
-                                   name="kepala_sekolah"
-                                   class="form-control"
-                                   value="{{ old('kepala_sekolah', $profilSekolah?->kepala_sekolah ?? '') }}"
-                                   required>
-                        </div>
+                        <i class="bi bi-pencil-square"></i>
+                        Edit Profil
 
-                        <!-- NPSN -->
-                        <div class="col-md-6">
-                            <label class="form-label">NPSN</label>
-                            <input type="text"
-                                   name="npsn"
-                                   class="form-control"
-                                   value="{{ old('npsn', $profilSekolah?->npsn ?? '') }}"
-                                   required>
-                        </div>
+                    </a>
 
-                        <!-- TAHUN BERDIRI -->
-                        <div class="col-md-6">
-                            <label class="form-label">Tahun Berdiri</label>
-                            <input type="number"
-                                   name="tahun_berdiri"
-                                   class="form-control"
-                                   value="{{ old('tahun_berdiri', $profilSekolah?->tahun_berdiri ?? '') }}"
-                                   required>
-                        </div>
+                </div>
 
-                        <!-- ALAMAT -->
-                        <div class="col-12">
-                            <label class="form-label">Alamat Sekolah</label>
-                            <textarea name="alamat"
-                                      class="form-control"
-                                      rows="3"
-                                      required>{{ old('alamat', $profilSekolah?->alamat ?? '') }}</textarea>
-                        </div>
+                <div class="info-grid">
 
-                        <!-- KONTAK -->
-                        <div class="col-12">
-                            <label class="form-label">Kontak</label>
-                            <input type="text"
-                                   name="kontak"
-                                   class="form-control"
-                                   value="{{ old('kontak', $profilSekolah?->kontak ?? '') }}"
-                                   required>
-                        </div>
+                    <!-- NAMA SEKOLAH -->
+                    <div class="info-item">
 
-                        <!-- VISI MISI -->
-                        <div class="col-12">
-                            <label class="form-label">Visi dan Misi</label>
-                            <textarea name="visi_misi"
-                                      class="form-control"
-                                      rows="4"
-                                      required>{{ old('visi_misi', $profilSekolah?->visi_misi ?? '') }}</textarea>
-                        </div>
+                        <span class="info-label">
+                            Nama Sekolah
+                        </span>
 
-                        <!-- DESKRIPSI -->
-                        <div class="col-12">
-                            <label class="form-label">Deskripsi Sekolah</label>
-                            <textarea name="deskripsi"
-                                      class="form-control"
-                                      rows="5"
-                                      required>{{ old('deskripsi', $profilSekolah?->deskripsi ?? '') }}</textarea>
+                        <div class="info-value">
+                            {{ $profilSekolah->nama_sekolah ?? '-' }}
                         </div>
 
                     </div>
 
-                    <!-- TOMBOL SIMPAN -->
-                    <div class="form-footer mt-4">
-                        <button type="submit" class="btn btn-save">
-                            <i class="bi bi-save"></i>
-                            Simpan Perubahan
-                        </button>
+                    <!-- KEPALA SEKOLAH -->
+                    <div class="info-item">
+
+                        <span class="info-label">
+                            Kepala Sekolah
+                        </span>
+
+                        <div class="info-value">
+                            {{ $profilSekolah->kepala_sekolah ?? '-' }}
+                        </div>
+
+                    </div>
+
+                    <!-- NPSN -->
+                    <div class="info-item">
+
+                        <span class="info-label">
+                            NPSN
+                        </span>
+
+                        <div class="info-value">
+                            {{ $profilSekolah->npsn ?? '-' }}
+                        </div>
+
+                    </div>
+
+                    <!-- TAHUN BERDIRI -->
+                    <div class="info-item">
+
+                        <span class="info-label">
+                            Tahun Berdiri
+                        </span>
+
+                        <div class="info-value">
+                            {{ $profilSekolah->tahun_berdiri ?? '-' }}
+                        </div>
+
+                    </div>
+
+                    <!-- ALAMAT -->
+                    <div class="info-item"
+                         style="grid-column: span 2;">
+
+                        <span class="info-label">
+                            Alamat Sekolah
+                        </span>
+
+                        <div class="info-value textarea">
+                            {{ $profilSekolah->alamat ?? '-' }}
+                        </div>
+
+                    </div>
+
+                    <!-- KONTAK -->
+                    <div class="info-item"
+                         style="grid-column: span 2;">
+
+                        <span class="info-label">
+                            Kontak
+                        </span>
+
+                        <div class="info-value">
+                            {{ $profilSekolah->kontak ?? '-' }}
+                        </div>
+
+                    </div>
+
+                    <!-- VISI MISI -->
+                    <div class="info-item"
+                         style="grid-column: span 2;">
+
+                        <span class="info-label">
+                            Visi dan Misi
+                        </span>
+
+                        <div class="info-value textarea">
+                            {{ $profilSekolah->visi_misi ?? '-' }}
+                        </div>
+
+                    </div>
+
+                    <!-- DESKRIPSI -->
+                    <div class="info-item"
+                         style="grid-column: span 2;">
+
+                        <span class="info-label">
+                            Deskripsi Sekolah
+                        </span>
+
+                        <div class="info-value textarea">
+                            {{ $profilSekolah->deskripsi ?? '-' }}
+                        </div>
+
                     </div>
 
                 </div>
+
             </div>
 
         </div>
-    </form>
+
+    </div>
+
 </div>
-
-<!-- PREVIEW GAMBAR -->
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const logoInput = document.getElementById('logoInput');
-    const logoPreview = document.getElementById('logoPreview');
-    const logoIcon = document.getElementById('logoIcon');
-
-    const fotoInput = document.getElementById('fotoInput');
-    const fotoPreview = document.getElementById('fotoPreview');
-
-    const namaSekolah = document.getElementById('namaSekolah');
-    const namaPreview = document.getElementById('namaPreview');
-
-    // Preview logo
-    logoInput.addEventListener('change', function () {
-        const file = this.files[0];
-
-        if (file) {
-            logoPreview.src = URL.createObjectURL(file);
-            logoPreview.style.display = 'block';
-            logoIcon.style.display = 'none';
-        }
-    });
-
-    // Tampilkan ikon jika gambar gagal dimuat
-    logoPreview.addEventListener('error', function () {
-        if (this.src) {
-            this.style.display = 'none';
-            logoIcon.style.display = 'block';
-        }
-    });
-
-    // Preview foto sekolah
-    fotoInput.addEventListener('change', function () {
-        const file = this.files[0];
-
-        if (file) {
-            fotoPreview.src = URL.createObjectURL(file);
-            fotoPreview.style.display = 'block';
-        }
-    });
-
-    // Preview nama sekolah
-    namaSekolah.addEventListener('input', function () {
-        namaPreview.textContent = this.value || 'Nama Sekolah';
-    });
-});
-</script>
-
-<!-- CSS -->
-<style>
-.profile-header {
-    background: linear-gradient(135deg, #18392b, #32634a);
-    color: white;
-    padding: 25px 30px;
-    border-radius: 14px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.profile-header h2 {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 6px;
-}
-
-.profile-header p {
-    margin: 0;
-    color: #dce9df;
-}
-
-.profile-icon {
-    font-size: 42px;
-    opacity: .85;
-}
-
-.profile-card {
-    background: #fff;
-    border-radius: 14px;
-    padding: 25px;
-    box-shadow: 0 3px 15px rgba(0,0,0,.06);
-    height: 100%;
-}
-
-.school-logo {
-    width: 115px;
-    height: 115px;
-    border-radius: 50%;
-    background: #edf4ef;
-    color: #32634a;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 48px;
-    margin: 5px auto 18px;
-    overflow: hidden;
-    border: 3px solid #d9e8dc;
-}
-
-.school-logo img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-.profile-card h4 {
-    font-size: 19px;
-    font-weight: 700;
-    color: #263b30;
-}
-
-.school-photo {
-    width: 100%;
-    max-height: 190px;
-    object-fit: cover;
-    border-radius: 10px;
-}
-
-.card-heading {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: #28563e;
-    border-bottom: 1px solid #e8eee9;
-    padding-bottom: 15px;
-    margin-bottom: 20px;
-}
-
-.card-heading i {
-    font-size: 22px;
-}
-
-.card-heading h5 {
-    margin: 0;
-    font-weight: 700;
-}
-
-.form-label {
-    color: #34483b;
-    font-weight: 600;
-    font-size: 14px;
-}
-
-.form-control {
-    border: 1px solid #dce4de;
-    border-radius: 8px;
-    padding: 10px 12px;
-}
-
-.form-control:focus {
-    border-color: #4d8061;
-    box-shadow: 0 0 0 3px rgba(77,128,97,.12);
-}
-
-.form-footer {
-    display: flex;
-    justify-content: flex-end;
-    border-top: 1px solid #e8eee9;
-    padding-top: 20px;
-}
-
-.btn-save {
-    background: #28563e;
-    color: white;
-    border: 0;
-    border-radius: 8px;
-    padding: 10px 20px;
-}
-
-.btn-save:hover {
-    background: #18392b;
-    color: white;
-}
-
-@media(max-width: 768px) {
-    .profile-header {
-        padding: 20px;
-    }
-
-    .profile-card {
-        padding: 18px;
-    }
-}
-</style>
 @endsection
+
+@push('scripts')
+<script>
+    // ALERT BERHASIL AKAN HILANG SETELAH 5 DETIK
+    setTimeout(function () {
+
+        const alert = document.getElementById('success-alert');
+
+        if (alert) {
+
+            alert.style.transition = 'opacity 0.5s ease';
+            alert.style.opacity = '0';
+
+            setTimeout(function () {
+                alert.remove();
+            }, 500);
+
+        }
+
+    }, 5000);
+</script>
+@endpush

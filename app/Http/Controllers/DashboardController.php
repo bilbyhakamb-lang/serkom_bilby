@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Dashboard;
 use App\Models\Siswa;
 use App\Models\Guru;
+use App\Models\Berita;
 use App\Http\Requests\StoreDashboardRequest;
 use App\Http\Requests\UpdateDashboardRequest;
 
@@ -19,6 +20,9 @@ class DashboardController extends Controller
             'title' => 'Dashboard',
             'jumlahSiswa' => Siswa::count(),
             'jumlahGuru' => Guru::count(),
+            'beritaTerbaru' => Berita::orderByDesc('id_berita')
+                ->take(3)
+                ->get(),
         ];
 
         return view('dashboard.dashboard', $data);

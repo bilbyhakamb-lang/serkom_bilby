@@ -1,19 +1,16 @@
-
 @extends('admin_app')
 
 @section('title', $title)
 
-@section('content')
-
+@push('styles')
+<link rel="stylesheet" href="{{ asset('assets/datatables/datatables.min.css') }}">
 <style>
     .siswa-page {
         width: 100%;
-        max-width: none;
-        margin: 0;
         padding: 30px;
         box-sizing: border-box;
         color: #26352d;
-}
+    }
 
     .siswa-heading {
         margin-bottom: 25px;
@@ -33,8 +30,8 @@
     }
 
     .siswa-card {
-        background: #fff;
         width: 100%;
+        background: #fff;
         border: 1px solid #e7ebe8;
         border-radius: 14px;
         box-shadow: 0 3px 14px rgba(0, 0, 0, .04);
@@ -63,37 +60,6 @@
         gap: 10px;
     }
 
-    .siswa-search {
-        width: 230px;
-        position: relative;
-    }
-
-    .siswa-search i {
-        position: absolute;
-        left: 12px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #849087;
-        font-size: 14px;
-    }
-
-    .siswa-search input {
-        width: 100%;
-        height: 39px;
-        padding: 8px 12px 8px 34px;
-        border: 1px solid #e0e6e1;
-        border-radius: 8px;
-        outline: none;
-        font-size: 13px;
-        box-sizing: border-box;
-        background: #fff;
-    }
-
-    .siswa-search input:focus {
-        border-color: #39865a;
-        box-shadow: 0 0 0 3px rgba(57, 134, 90, .10);
-    }
-
     .btn-tambah-siswa {
         height: 39px;
         padding: 0 15px;
@@ -120,6 +86,7 @@
     .siswa-table-wrap {
         width: 100%;
         overflow-x: auto;
+        padding: 0 22px;
     }
 
     .siswa-table {
@@ -222,6 +189,15 @@
         transition: .2s;
     }
 
+    .btn-detail {
+        color: #0d8ca5;
+    }
+
+    .btn-detail:hover {
+        background: #eaf8fb;
+        border-color: #b5e0e8;
+    }
+
     .btn-edit {
         color: #27804d;
     }
@@ -271,6 +247,118 @@
         color: #b52e38;
     }
 
+    /* ================= DATATABLES CUSTOM ================= */
+    .dataTables_wrapper {
+        padding: 0 22px 10px;
+    }
+
+    .dataTables_wrapper .dataTables_length,
+    .dataTables_wrapper .dataTables_filter {
+        margin: 15px 0;
+        font-size: 13px;
+        color: #68766d;
+    }
+
+    .dataTables_wrapper .dataTables_filter {
+        text-align: right;
+    }
+
+    .dataTables_wrapper .dataTables_filter label {
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .dataTables_wrapper .dataTables_filter input {
+        height: 39px;
+        border: 1px solid #e0e6e1;
+        border-radius: 8px;
+        padding: 8px 12px;
+        outline: none;
+        font-size: 13px;
+        background: #fff;
+        min-width: 220px;
+    }
+
+    .dataTables_wrapper .dataTables_filter input:focus {
+        border-color: #39865a;
+        box-shadow: 0 0 0 3px rgba(57, 134, 90, .10);
+    }
+
+    .dataTables_wrapper .dataTables_length label {
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .dataTables_wrapper .dataTables_length select {
+        height: 39px;
+        border: 1px solid #e0e6e1;
+        border-radius: 8px;
+        padding: 0 30px 0 12px;
+        outline: none;
+        font-size: 13px;
+        background: #fff;
+    }
+
+    .dataTables_wrapper .dataTables_length select:focus {
+        border-color: #39865a;
+        box-shadow: 0 0 0 3px rgba(57, 134, 90, .10);
+    }
+
+    .dataTables_wrapper .dataTables_info {
+        font-size: 12px;
+        color: #758078;
+        padding-top: 12px !important;
+    }
+
+    .dataTables_wrapper .dataTables_paginate {
+        padding-top: 10px !important;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+        border-radius: 7px !important;
+        padding: 6px 12px !important;
+        margin: 0 2px !important;
+        border: 1px solid #e5e9e6 !important;
+        background: #fff !important;
+        color: #354239 !important;
+        font-size: 13px !important;
+        font-weight: 500;
+        transition: .2s;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+        background: #f0f7f3 !important;
+        border-color: #b8d8c3 !important;
+        color: #27804d !important;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+        background: #159b68 !important;
+        border-color: #159b68 !important;
+        color: #fff !important;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
+    .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover {
+        background: #fff !important;
+        color: #c5cdc7 !important;
+        border-color: #edf0ed !important;
+        cursor: not-allowed;
+    }
+
+    /* Baris kosong custom */
+    .dataTables_wrapper .dataTables_empty {
+        padding: 38px 15px !important;
+        text-align: center;
+        color: #89928b !important;
+        font-size: 13px !important;
+    }
+
     @media (max-width: 768px) {
         .siswa-page {
             padding: 20px 14px;
@@ -290,13 +378,25 @@
             width: 100%;
         }
 
-        .siswa-search {
-            width: 100%;
-            flex: 1;
-        }
-
         .siswa-footer {
             padding: 14px 16px;
+        }
+
+        .siswa-table-wrap {
+            padding: 0 12px;
+        }
+
+        .dataTables_wrapper {
+            padding: 0 12px 10px;
+        }
+
+        .dataTables_wrapper .dataTables_filter {
+            text-align: left;
+        }
+
+        .dataTables_wrapper .dataTables_filter input {
+            width: 100%;
+            min-width: 0;
         }
     }
 
@@ -306,23 +406,23 @@
             align-items: stretch;
         }
 
-        .siswa-search {
-            width: 100%;
-        }
-
         .btn-tambah-siswa {
             width: 100%;
         }
     }
 </style>
+@endpush
 
+@section('content')
 <div class="siswa-page">
 
+    <!-- HEADER -->
     <div class="siswa-heading">
         <h2>Kelola Data Siswa</h2>
         <p>Kelola dan lihat informasi data siswa sekolah.</p>
     </div>
 
+    <!-- NOTIFIKASI -->
     @if (session('success'))
         <div class="siswa-alert">
             <i class="bi bi-check-circle"></i>
@@ -337,18 +437,14 @@
         </div>
     @endif
 
+    <!-- TABEL SISWA -->
     <div class="siswa-card">
 
+        <!-- TOOLBAR -->
         <div class="siswa-toolbar">
             <h4>Daftar Siswa</h4>
 
             <div class="siswa-toolbar-actions">
-                <div class="siswa-search">
-                    <i class="bi bi-search"></i>
-                    <input type="text" id="cariSiswa"
-                           placeholder="Cari nama atau NISN...">
-                </div>
-
                 <a href="{{ route('siswa.form') }}" class="btn-tambah-siswa">
                     <i class="bi bi-plus-circle"></i>
                     Tambah Siswa
@@ -356,6 +452,7 @@
             </div>
         </div>
 
+        <!-- DATA TABLE -->
         <div class="siswa-table-wrap">
             <table class="siswa-table" id="tabelSiswa">
                 <thead>
@@ -365,37 +462,44 @@
                         <th>Nama Siswa</th>
                         <th>Jenis Kelamin</th>
                         <th>Tahun Masuk</th>
-                        <th style="width: 115px;">Aksi</th>
+                        <th style="width: 140px;">Aksi</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    @forelse ($siswa as $item)
-                        <tr class="siswa-row">
+                    @foreach ($siswa as $s)
+                        <tr>
                             <td class="siswa-no">{{ $loop->iteration }}</td>
-                            <td class="siswa-nisn">{{ $item->nisn }}</td>
-                            <td class="siswa-nama">{{ $item->nama_siswa }}</td>
+
+                            <td class="siswa-nisn">{{ $s->nisn }}</td>
+
+                            <td class="siswa-nama">{{ $s->nama_siswa }}</td>
+
                             <td>
-                                @if ($item->jenis_kelamin == 'Laki-Laki')
-                                    <span class="gender-badge gender-laki">
-                                        Laki-Laki
-                                    </span>
+                                @if ($s->jenis_kelamin == 'Laki-Laki')
+                                    <span class="gender-badge gender-laki">Laki-Laki</span>
                                 @else
-                                    <span class="gender-badge gender-perempuan">
-                                        Perempuan
-                                    </span>
+                                    <span class="gender-badge gender-perempuan">Perempuan</span>
                                 @endif
                             </td>
-                            <td class="siswa-tahun">{{ $item->tahun_masuk }}</td>
+
+                            <td class="siswa-tahun">{{ $s->tahun_masuk }}</td>
+
                             <td>
                                 <div class="siswa-actions">
-                                    <a href="{{ route('siswa.form', encrypt($item->id_siswa)) }}"
+                                    <a href="{{ route('admin.siswa.show', encrypt($s->id_siswa)) }}"
+                                       class="btn-aksi btn-detail"
+                                       title="Detail data">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+
+                                    <a href="{{ route('siswa.form', encrypt($s->id_siswa)) }}"
                                        class="btn-aksi btn-edit"
                                        title="Edit data">
                                         <i class="bi bi-pencil"></i>
                                     </a>
 
-                                    <form action="{{ route('siswa.destroy', encrypt($item->id_siswa)) }}"
+                                    <form action="{{ route('siswa.destroy', encrypt($s->id_siswa)) }}"
                                           method="POST"
                                           onsubmit="return confirm('Yakin ingin menghapus data siswa ini?')">
                                         @csrf
@@ -410,24 +514,12 @@
                                 </div>
                             </td>
                         </tr>
-                    @empty
-                        <tr class="empty-row">
-                            <td colspan="6" class="siswa-empty">
-                                <i class="bi bi-people" style="font-size: 24px; display: block; margin-bottom: 8px;"></i>
-                                Belum ada data siswa.
-                            </td>
-                        </tr>
-                    @endforelse
-
-                    <tr id="hasilKosong" style="display: none;">
-                        <td colspan="6" class="siswa-empty">
-                            Data siswa tidak ditemukan.
-                        </td>
-                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
 
+        <!-- FOOTER -->
         <div class="siswa-footer">
             <span>Jumlah siswa: {{ $siswa->count() }}</span>
             <span>Data siswa sekolah</span>
@@ -435,26 +527,48 @@
 
     </div>
 </div>
+@endsection
 
+@push('scripts')
+<script src="{{ asset('assets/datatables/datatables.min.js') }}"></script>
 <script>
-    document.getElementById('cariSiswa').addEventListener('input', function () {
-        const kataKunci = this.value.toLowerCase().trim();
-        const baris = document.querySelectorAll('#tabelSiswa .siswa-row');
-        let jumlahTampil = 0;
+    $(document).ready(function () {
+        $('#tabelSiswa').DataTable({
+            responsive: true,
+            autoWidth: false,
+            pageLength: 10,
+            lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Semua"]],
+            order: [[0, 'asc']],
+            columnDefs: [
+                { orderable: false, targets: [0, 5] }
+            ],
+            language: {
+                search: "",
+                searchPlaceholder: "Cari nama atau NISN...",
+                lengthMenu: "Tampilkan _MENU_ data",
+                info: "Menampilkan _START_ - _END_ dari _TOTAL_ data",
+                infoEmpty: "Tidak ada data",
+                infoFiltered: "(difilter dari _MAX_ total data)",
+                zeroRecords: "Data siswa tidak ditemukan",
+                emptyTable: "Belum ada data siswa",
+                paginate: {
+                    first: "Awal",
+                    last: "Akhir",
+                    next: "Next",
+                    previous: "Prev"
+                }
+            },
+            drawCallback: function () {
+                // Renumber kolom "No" setiap kali tabel redraw (sort/filter/page)
+                const api = this.api();
+                const rows = api.rows({ page: 'current' }).nodes();
 
-        baris.forEach(function (row) {
-            const cocok = row.textContent.toLowerCase().includes(kataKunci);
-            row.style.display = cocok ? '' : 'none';
-
-            if (cocok) {
-                jumlahTampil++;
+                api.column(0, { page: 'current' }).nodes().each(function (cell, i) {
+                    const info = api.page.info();
+                    cell.innerHTML = info.start + i + 1;
+                });
             }
         });
-
-        const hasilKosong = document.getElementById('hasilKosong');
-        hasilKosong.style.display =
-            (jumlahTampil === 0 && baris.length > 0) ? '' : 'none';
     });
 </script>
-
-@endsection
+@endpush

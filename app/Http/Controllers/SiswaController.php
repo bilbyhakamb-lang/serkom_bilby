@@ -19,6 +19,23 @@ class SiswaController extends Controller
         ]);
     }
 
+    // Menampilkan detail siswa
+    public function show($id)
+    {
+        try {
+            $idSiswa = Crypt::decrypt($id);
+            $siswa = Siswa::findOrFail($idSiswa);
+        } catch (\Exception $e) {
+            return redirect()->route('admin.siswa')
+                ->with('error', 'Data siswa tidak ditemukan.');
+        }
+
+        return view('siswa.detail', [
+            'title' => 'Detail Data Siswa',
+            'siswa' => $siswa
+        ]);
+    }
+
     // Menambahkan data siswa
     public function store(Request $request)
     {
