@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
+use App\Http\Controllers\LandingController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileSekolahController;
 use App\Http\Controllers\BeritaController;
@@ -13,12 +14,13 @@ use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\DashboardController;
 
 
+
 // =====================================================
 // LOGIN
 // =====================================================
-Route::get('/', function () {
-    return redirect()->route('login');
-});
+Route::get('/', [LandingController::class, 'index'])
+    ->name('landing');
+
 Route::get('/login', function () {
     return view('login.login');
 })->name('login');
@@ -94,45 +96,21 @@ Route::get('/guru/{id}/detail', [GuruController::class, 'show'])->name('admin.gu
 // EKSTRAKULIKULER
 // =====================================================
 
-Route::get('/ekstrakulikuler', [EkstrakulikulerController::class, 'index'])
-    ->name('admin.ekstrakulikuler');
-
-Route::get('/eskul/tambah', [EkstrakulikulerController::class, 'create'])
-    ->name('eskul.create');
-
-Route::post('/eskul', [EkstrakulikulerController::class, 'store'])
-    ->name('eskul.store');
-
-Route::get('/eskul/{id}/edit', [EkstrakulikulerController::class, 'edit'])
-    ->name('eskul.edit');
-
-Route::put('/eskul/{id}', [EkstrakulikulerController::class, 'update'])
-    ->name('eskul.update');
-
-Route::delete('/eskul/{id}', [EkstrakulikulerController::class, 'destroy'])
-    ->name('eskul.destroy');
-
+Route::get('/ekstrakulikuler', [EkstrakulikulerController::class, 'index'])->name('admin.ekstrakulikuler');
+Route::get('/eskul/tambah', [EkstrakulikulerController::class, 'create'])->name('eskul.create');
+Route::post('/eskul', [EkstrakulikulerController::class, 'store'])->name('eskul.store');
+Route::get('/eskul/{id}/edit', [EkstrakulikulerController::class, 'edit'])->name('eskul.edit');
+Route::put('/eskul/{id}', [EkstrakulikulerController::class, 'update'])->name('eskul.update');
+Route::delete('/eskul/{id}', [EkstrakulikulerController::class, 'destroy'])->name('eskul.destroy');
 
 // =====================================================
-// DETAIL TANPA ID
+// DETAIL EKSTRAKULIKULER
 // /ekstrakulikuler/detail
+// /ekstrakulikuler/detail/{id}
 // =====================================================
-
-Route::get('/ekstrakulikuler/detail', function () {
-    return redirect()
-        ->route('admin.ekstrakulikuler')
-        ->with('error', 'Data ekstrakurikuler tidak ditemukan.');
-})->name('eskul.detail.empty');
-
-
-// =====================================================
-// DETAIL DENGAN ID TERENKRIPSI
-// =====================================================
-
-Route::get('/ekstrakulikuler/detail/{id}', [EkstrakulikulerController::class, 'show'])
+Route::get('/ekstrakulikuler/detail/{id?}', [EkstrakulikulerController::class, 'show'])
     ->where('id', '.*')
     ->name('admin.ekstrakulikuler.show');
-
 
     // =================================================
     // GALERI

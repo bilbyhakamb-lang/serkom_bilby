@@ -1,10 +1,15 @@
 @extends('admin_app')
 
-@section('title', $title)
+@section('title', $title ?? 'Kelola Data Siswa')
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/datatables/datatables.min.css') }}">
+
 <style>
+    /* ============================= */
+    /* PAGE */
+    /* ============================= */
+
     .siswa-page {
         width: 100%;
         padding: 30px;
@@ -12,23 +17,48 @@
         color: #26352d;
     }
 
-    .siswa-heading {
-        margin-bottom: 25px;
+
+    /* ============================= */
+    /* HEADER HIJAU */
+    /* ============================= */
+
+    .siswa-header {
+        background: linear-gradient(135deg, #18392b, #32634a);
+        color: white;
+
+        padding: 25px 30px;
+
+        border-radius: 14px;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        margin-bottom: 24px;
     }
 
-    .siswa-heading h2 {
-        font-size: 26px;
+    .siswa-header-content h2 {
+        font-size: 24px;
         font-weight: 700;
-        margin: 0 0 7px;
-        color: #24352b;
+        margin: 0 0 6px;
+        color: white;
     }
 
-    .siswa-heading p {
+    .siswa-header-content p {
         font-size: 14px;
-        color: #7b857e;
         margin: 0;
+        color: #dce9df;
     }
 
+    .siswa-header .header-icon {
+        font-size: 42px;
+        opacity: .85;
+    }
+
+
+    /* ============================= */
+    /* CARD */
+    /* ============================= */
     .siswa-card {
         width: 100%;
         background: #fff;
@@ -38,6 +68,10 @@
         overflow: hidden;
     }
 
+
+    /* ============================= */
+    /* TOOLBAR */
+    /* ============================= */
     .siswa-toolbar {
         display: flex;
         align-items: center;
@@ -59,6 +93,11 @@
         align-items: center;
         gap: 10px;
     }
+
+
+    /* ============================= */
+    /* TOMBOL TAMBAH */
+    /* ============================= */
 
     .btn-tambah-siswa {
         height: 39px;
@@ -82,6 +121,11 @@
         background: #117d54;
         color: #fff;
     }
+
+
+    /* ============================= */
+    /* TABEL */
+    /* ============================= */
 
     .siswa-table-wrap {
         width: 100%;
@@ -128,6 +172,10 @@
         border-bottom: none;
     }
 
+
+    /* ============================= */
+    /* DATA */
+    /* ============================= */
     .siswa-no {
         color: #879188 !important;
         width: 60px;
@@ -145,6 +193,14 @@
         min-width: 180px;
     }
 
+    .siswa-tahun {
+        white-space: nowrap;
+    }
+
+
+    /* ============================= */
+    /* JENIS KELAMIN */
+    /* ============================= */
     .gender-badge {
         display: inline-block;
         padding: 5px 10px;
@@ -164,10 +220,10 @@
         color: #8953a4;
     }
 
-    .siswa-tahun {
-        white-space: nowrap;
-    }
 
+    /* ============================= */
+    /* AKSI */
+    /* ============================= */
     .siswa-actions {
         display: flex;
         align-items: center;
@@ -196,6 +252,7 @@
     .btn-detail:hover {
         background: #eaf8fb;
         border-color: #b5e0e8;
+        color: #0d8ca5;
     }
 
     .btn-edit {
@@ -205,6 +262,7 @@
     .btn-edit:hover {
         background: #eaf4ee;
         border-color: #b8d8c3;
+        color: #27804d;
     }
 
     .btn-hapus {
@@ -214,25 +272,13 @@
     .btn-hapus:hover {
         background: #fff0f0;
         border-color: #f0c4c4;
+        color: #d64545;
     }
 
-    .siswa-empty {
-        padding: 38px 15px !important;
-        text-align: center;
-        color: #89928b !important;
-        font-size: 13px !important;
-    }
 
-    .siswa-footer {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 15px 22px;
-        border-top: 1px solid #edf0ed;
-        color: #758078;
-        font-size: 12px;
-    }
-
+    /* ============================= */
+    /* ALERT */
+    /* ============================= */
     .siswa-alert {
         padding: 12px 16px;
         margin-bottom: 18px;
@@ -247,7 +293,24 @@
         color: #b52e38;
     }
 
-    /* ================= DATATABLES CUSTOM ================= */
+
+    /* ============================= */
+    /* FOOTER CARD */
+    /* ============================= */
+    .siswa-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 22px;
+        border-top: 1px solid #edf0ed;
+        color: #758078;
+        font-size: 12px;
+    }
+
+
+    /* ============================= */
+    /* DATATABLES */
+    /* ============================= */
     .dataTables_wrapper {
         padding: 0 22px 10px;
     }
@@ -319,6 +382,7 @@
     }
 
     .dataTables_wrapper .dataTables_paginate .paginate_button {
+
         border-radius: 7px !important;
         padding: 6px 12px !important;
         margin: 0 2px !important;
@@ -338,6 +402,7 @@
 
     .dataTables_wrapper .dataTables_paginate .paginate_button.current,
     .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+
         background: #159b68 !important;
         border-color: #159b68 !important;
         color: #fff !important;
@@ -345,27 +410,42 @@
 
     .dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
     .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover {
+
         background: #fff !important;
         color: #c5cdc7 !important;
         border-color: #edf0ed !important;
         cursor: not-allowed;
     }
 
-    /* Baris kosong custom */
     .dataTables_wrapper .dataTables_empty {
+
         padding: 38px 15px !important;
         text-align: center;
         color: #89928b !important;
         font-size: 13px !important;
     }
 
+
+    /* ============================= */
+    /* RESPONSIVE */
+    /* ============================= */
+
     @media (max-width: 768px) {
+
         .siswa-page {
             padding: 20px 14px;
         }
 
-        .siswa-heading h2 {
-            font-size: 22px;
+        .siswa-header {
+            padding: 20px;
+        }
+
+        .siswa-header-content h2 {
+            font-size: 20px;
+        }
+
+        .siswa-card {
+            padding: 0;
         }
 
         .siswa-toolbar {
@@ -375,6 +455,10 @@
         }
 
         .siswa-toolbar-actions {
+            width: 100%;
+        }
+
+        .btn-tambah-siswa {
             width: 100%;
         }
 
@@ -401,110 +485,218 @@
     }
 
     @media (max-width: 480px) {
+
         .siswa-toolbar-actions {
             flex-direction: column;
-            align-items: stretch;
-        }
 
-        .btn-tambah-siswa {
-            width: 100%;
+            align-items: stretch;
         }
     }
 </style>
 @endpush
 
+
 @section('content')
+
 <div class="siswa-page">
 
-    <!-- HEADER -->
-    <div class="siswa-heading">
-        <h2>Kelola Data Siswa</h2>
-        <p>Kelola dan lihat informasi data siswa sekolah.</p>
+    <!-- ============================= -->
+    <!-- HEADER HIJAU -->
+    <!-- ============================= -->
+
+    <div class="siswa-header">
+
+        <div class="siswa-header-content">
+
+            <h2>
+                Kelola Data Siswa
+            </h2>
+
+            <p>
+                Kelola dan lihat informasi data siswa sekolah.
+            </p>
+
+        </div>
+
+        <i class="bi bi-people-fill header-icon"></i>
+
     </div>
 
-    <!-- NOTIFIKASI -->
-    @if (session('success'))
+
+    <!-- ============================= -->
+    <!-- NOTIFIKASI SUCCESS -->
+    <!-- ============================= -->
+
+    @if(session('success'))
+
         <div class="siswa-alert">
-            <i class="bi bi-check-circle"></i>
+
+            <i class="bi bi-check-circle me-2"></i>
+
             {{ session('success') }}
+
         </div>
+
     @endif
 
-    @if (session('error'))
+
+    <!-- ============================= -->
+    <!-- NOTIFIKASI ERROR -->
+    <!-- ============================= -->
+
+    @if(session('error'))
+
         <div class="siswa-alert siswa-alert-error">
-            <i class="bi bi-exclamation-circle"></i>
+
+            <i class="bi bi-exclamation-circle me-2"></i>
+
             {{ session('error') }}
+
         </div>
+
     @endif
 
-    <!-- TABEL SISWA -->
+
+    <!-- ============================= -->
+    <!-- CARD SISWA -->
+    <!-- ============================= -->
+
     <div class="siswa-card">
 
+
         <!-- TOOLBAR -->
+
         <div class="siswa-toolbar">
-            <h4>Daftar Siswa</h4>
+
+            <h4>
+                Daftar Siswa
+            </h4>
+
 
             <div class="siswa-toolbar-actions">
-                <a href="{{ route('siswa.form') }}" class="btn-tambah-siswa">
+
+                <a href="{{ route('siswa.form') }}"
+                   class="btn-tambah-siswa">
+
                     <i class="bi bi-plus-circle"></i>
+
                     Tambah Siswa
+
                 </a>
+
             </div>
+
         </div>
 
-        <!-- DATA TABLE -->
+
+        <!-- ============================= -->
+        <!-- TABEL SISWA -->
+        <!-- ============================= -->
+
         <div class="siswa-table-wrap">
-            <table class="siswa-table" id="tabelSiswa">
+
+            <table class="siswa-table"
+                   id="tabelSiswa">
+
                 <thead>
+
                     <tr>
-                        <th style="width: 65px;">No</th>
-                        <th>NISN</th>
-                        <th>Nama Siswa</th>
-                        <th>Jenis Kelamin</th>
-                        <th>Tahun Masuk</th>
-                        <th style="width: 140px;">Aksi</th>
+                        <th style="width: 65px;">
+                            No
+                        </th>
+                        <th>
+                            NISN
+                        </th>
+                        <th>
+                            Nama Siswa
+                        </th>
+                        <th>
+                            Jenis Kelamin
+                        </th>
+                        <th>
+                            Tahun Masuk
+                        </th>
+                        <th style="width: 140px;">
+                            Aksi
+                        </th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    @foreach ($siswa as $s)
+                    @forelse($siswa as $s)
+
                         <tr>
-                            <td class="siswa-no">{{ $loop->iteration }}</td>
 
-                            <td class="siswa-nisn">{{ $s->nisn }}</td>
+                            <!-- NO -->
+                            <td class="siswa-no">
+                                {{ $loop->iteration }}
+                            </td>
 
-                            <td class="siswa-nama">{{ $s->nama_siswa }}</td>
+                            <!-- NISN -->
+                            <td class="siswa-nisn">
+                                {{ $s->nisn }}
+                            </td>
 
+                            <!-- NAMA -->
+                            <td class="siswa-nama">
+                                {{ $s->nama_siswa }}
+                            </td>
+
+                            <!-- JENIS KELAMIN -->
                             <td>
-                                @if ($s->jenis_kelamin == 'Laki-Laki')
-                                    <span class="gender-badge gender-laki">Laki-Laki</span>
+                                @if($s->jenis_kelamin == 'Laki-Laki')
+                                    <span class="gender-badge gender-laki">
+                                        Laki-Laki
+                                    </span>
                                 @else
-                                    <span class="gender-badge gender-perempuan">Perempuan</span>
+                                    <span class="gender-badge gender-perempuan">
+                                        Perempuan
+                                    </span>
                                 @endif
                             </td>
 
-                            <td class="siswa-tahun">{{ $s->tahun_masuk }}</td>
+                            <!-- TAHUN -->
+                            <td class="siswa-tahun">
+                                {{ $s->tahun_masuk }}
+                            </td>
 
+                            <!-- AKSI -->
                             <td>
                                 <div class="siswa-actions">
-                                    <a href="{{ route('admin.siswa.show', encrypt($s->id_siswa)) }}"
+
+
+                                    <!-- DETAIL -->
+
+                                    <a href="{{ route(
+                                        'admin.siswa.show',
+                                        encrypt($s->id_siswa)
+                                    ) }}"
                                        class="btn-aksi btn-detail"
                                        title="Detail data">
+
                                         <i class="bi bi-eye"></i>
                                     </a>
 
-                                    <a href="{{ route('siswa.form', encrypt($s->id_siswa)) }}"
+                                    <!-- EDIT -->
+                                    <a href="{{ route(
+                                        'siswa.form',
+                                        encrypt($s->id_siswa)
+                                    ) }}"
                                        class="btn-aksi btn-edit"
                                        title="Edit data">
+
                                         <i class="bi bi-pencil"></i>
                                     </a>
 
-                                    <form action="{{ route('siswa.destroy', encrypt($s->id_siswa)) }}"
+                                    <!-- HAPUS -->
+                                    <form action="{{ route(
+                                        'siswa.destroy',
+                                        encrypt($s->id_siswa)
+                                    ) }}"
                                           method="POST"
                                           onsubmit="return confirm('Yakin ingin menghapus data siswa ini?')">
                                         @csrf
                                         @method('DELETE')
-
                                         <button type="submit"
                                                 class="btn-aksi btn-hapus"
                                                 title="Hapus data">
@@ -514,58 +706,101 @@
                                 </div>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="6"
+                                class="text-center py-5">
+                                <i class="bi bi-people fs-1 text-muted"></i>
+                                <p class="text-muted mt-2 mb-0">
+                                    Belum ada data siswa.
+                                </p>
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
 
         <!-- FOOTER -->
         <div class="siswa-footer">
-            <span>Jumlah siswa: {{ $siswa->count() }}</span>
-            <span>Data siswa sekolah</span>
-        </div>
 
+            <span>
+                Jumlah siswa:
+                {{ $siswa->count() }}
+            </span>
+
+            <span>
+                Data siswa sekolah
+            </span>
+        </div>
     </div>
 </div>
+
 @endsection
 
 @push('scripts')
-<script src="{{ asset('assets/datatables/datatables.min.js') }}"></script>
+
 <script>
     $(document).ready(function () {
+
         $('#tabelSiswa').DataTable({
+
             responsive: true,
             autoWidth: false,
             pageLength: 10,
-            lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Semua"]],
-            order: [[0, 'asc']],
-            columnDefs: [
-                { orderable: false, targets: [0, 5] }
+            lengthMenu: [
+                [5, 10, 25, 50, -1],
+                [5, 10, 25, 50, "Semua"]
             ],
+            order: [[0, 'asc']],
+
+            columnDefs: [
+
+                {
+                    // Kolom No dan Aksi tidak bisa di-sort
+                    orderable: false,
+                    targets: [0, 5]
+                }
+
+            ],
+
             language: {
+
                 search: "",
-                searchPlaceholder: "Cari nama atau NISN...",
-                lengthMenu: "Tampilkan _MENU_ data",
-                info: "Menampilkan _START_ - _END_ dari _TOTAL_ data",
-                infoEmpty: "Tidak ada data",
-                infoFiltered: "(difilter dari _MAX_ total data)",
-                zeroRecords: "Data siswa tidak ditemukan",
-                emptyTable: "Belum ada data siswa",
+                searchPlaceholder:
+                    "Cari nama atau NISN...",
+                lengthMenu:
+                    "Tampilkan _MENU_ data",
+                info:
+                    "Menampilkan _START_ - _END_ dari _TOTAL_ data",
+                infoEmpty:
+                    "Tidak ada data",
+                infoFiltered:
+                    "(difilter dari _MAX_ total data)",
+                zeroRecords:
+                    "Data siswa tidak ditemukan",
+                emptyTable:
+                    "Belum ada data siswa",
+
                 paginate: {
+
                     first: "Awal",
                     last: "Akhir",
                     next: "Next",
                     previous: "Prev"
                 }
             },
-            drawCallback: function () {
-                // Renumber kolom "No" setiap kali tabel redraw (sort/filter/page)
-                const api = this.api();
-                const rows = api.rows({ page: 'current' }).nodes();
 
-                api.column(0, { page: 'current' }).nodes().each(function (cell, i) {
+            drawCallback: function () {
+                const api = this.api();
+                api.column(0, {
+                    page: 'current'
+                })
+                .nodes()
+                .each(function (cell, i) {
                     const info = api.page.info();
-                    cell.innerHTML = info.start + i + 1;
+                    cell.innerHTML =
+                        info.start + i + 1;
                 });
             }
         });

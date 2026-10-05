@@ -8,6 +8,7 @@
 
 @push('styles')
 <style>
+
     /* ============================= */
     /* HEADER */
     /* ============================= */
@@ -31,12 +32,14 @@
     .eskul-header p {
         margin: 0;
         color: #dce9df;
+        font-size: 14px;
     }
 
     .header-icon {
         font-size: 42px;
         opacity: .85;
     }
+
 
     /* ============================= */
     /* CARD */
@@ -48,6 +51,7 @@
         padding: 25px;
         box-shadow: 0 3px 15px rgba(0, 0, 0, .06);
     }
+
 
     /* ============================= */
     /* JUDUL CARD */
@@ -70,6 +74,7 @@
         font-weight: 700;
     }
 
+
     /* ============================= */
     /* ALERT */
     /* ============================= */
@@ -80,6 +85,7 @@
         font-size: 14px;
         margin-bottom: 20px;
     }
+
 
     /* ============================= */
     /* TABEL */
@@ -94,6 +100,7 @@
         color: #28563e;
         font-size: 14px;
         white-space: nowrap;
+        vertical-align: middle;
     }
 
     #tabelEkstrakulikuler tbody td {
@@ -101,6 +108,7 @@
         font-size: 14px;
         vertical-align: middle;
     }
+
 
     /* ============================= */
     /* GAMBAR */
@@ -114,6 +122,7 @@
         border: 2px solid #d9e8dc;
     }
 
+
     /* ============================= */
     /* TOMBOL TAMBAH */
     /* ============================= */
@@ -125,12 +134,17 @@
         border-radius: 8px;
         padding: 10px 16px;
         transition: all .2s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
     }
 
     .btn-add:hover {
         background: #18392b;
         color: white;
+        transform: translateY(-1px);
     }
+
 
     /* ============================= */
     /* TOMBOL AKSI */
@@ -145,7 +159,9 @@
         border: none;
         border-radius: 8px;
         transition: all .2s ease;
+        text-decoration: none;
     }
+
 
     /* DETAIL */
 
@@ -159,6 +175,7 @@
         color: white;
     }
 
+
     /* EDIT */
 
     .btn-edit {
@@ -170,6 +187,7 @@
         background-color: #cfe5d6;
         color: #18392b;
     }
+
 
     /* HAPUS */
 
@@ -183,12 +201,16 @@
         color: #912018;
     }
 
+
+    /* ============================= */
     /* HOVER */
+    /* ============================= */
 
     .action-btn:hover {
         transform: translateY(-2px);
         box-shadow: 0 3px 8px rgba(0, 0, 0, .15);
     }
+
 
     /* ============================= */
     /* DATA KOSONG */
@@ -198,6 +220,7 @@
         font-size: 42px;
         color: #9aafa0;
     }
+
 
     /* ============================= */
     /* DATATABLES */
@@ -281,6 +304,7 @@
         cursor: not-allowed;
     }
 
+
     /* ============================= */
     /* RESPONSIVE */
     /* ============================= */
@@ -310,7 +334,9 @@
         #tabelEkstrakulikuler {
             min-width: 900px;
         }
+
     }
+
 </style>
 @endpush
 
@@ -429,6 +455,7 @@
     <div class="eskul-card">
 
         <!-- JUDUL CARD -->
+
         <div class="card-heading mb-4">
 
             <i class="bi bi-info-circle"></i>
@@ -502,17 +529,19 @@
 
                 <tbody>
 
-                    @forelse($eskul as $item)
+                    @foreach($eskul as $item)
 
                         <tr>
 
                             <!-- NO -->
+
                             <td>
                                 {{ $loop->iteration }}
                             </td>
 
 
                             <!-- GAMBAR -->
+
                             <td>
 
                                 @if($item->gambar)
@@ -534,38 +563,49 @@
 
 
                             <!-- NAMA -->
+
                             <td class="fw-semibold">
                                 {{ $item->nama_ekskul }}
                             </td>
 
 
                             <!-- PEMBINA -->
+
                             <td>
                                 {{ $item->pembina ?? '-' }}
                             </td>
 
 
                             <!-- JADWAL -->
+
                             <td>
                                 {{ $item->jadwal_latihan ?? '-' }}
                             </td>
 
 
                             <!-- DESKRIPSI -->
+
                             <td>
                                 {{ $item->deskripsi ?: '-' }}
                             </td>
 
 
                             <!-- AKSI -->
+
                             <td class="text-center">
 
                                 <div class="d-flex justify-content-center gap-2">
 
+
                                     <!-- DETAIL -->
+
                                     <a href="{{ route(
                                         'admin.ekstrakulikuler.show',
-                                        ['id' => Crypt::encryptString((string) $item->getKey())]
+                                        [
+                                            'id' => Crypt::encryptString(
+                                                (string) $item->getKey()
+                                            )
+                                        ]
                                     ) }}"
                                        class="btn action-btn btn-detail"
                                        title="Detail Ekstrakurikuler">
@@ -576,9 +616,12 @@
 
 
                                     <!-- EDIT -->
+
                                     <a href="{{ route(
                                         'eskul.edit',
-                                        ['id' => $item->getKey()]
+                                        [
+                                            'id' => $item->getKey()
+                                        ]
                                     ) }}"
                                        class="btn action-btn btn-edit"
                                        title="Edit Ekstrakurikuler">
@@ -589,9 +632,12 @@
 
 
                                     <!-- HAPUS -->
+
                                     <form action="{{ route(
                                         'eskul.destroy',
-                                        ['id' => $item->getKey()]
+                                        [
+                                            'id' => $item->getKey()
+                                        ]
                                     ) }}"
                                           method="POST"
                                           class="d-inline"
@@ -617,24 +663,7 @@
 
                         </tr>
 
-                    @empty
-
-                        <tr>
-
-                            <td colspan="7"
-                                class="text-center py-5">
-
-                                <i class="bi bi-trophy empty-icon"></i>
-
-                                <p class="text-muted mt-3 mb-0">
-                                    Belum ada data ekstrakurikuler.
-                                </p>
-
-                            </td>
-
-                        </tr>
-
-                    @endforelse
+                    @endforeach
 
                 </tbody>
 
@@ -643,12 +672,18 @@
         </div>
 
 
+        <!-- ============================= -->
         <!-- TOTAL DATA -->
+        <!-- ============================= -->
 
         <div class="text-muted small mt-3">
 
             Total ekstrakurikuler:
-            <strong>{{ $eskul->count() }}</strong>
+
+            <strong>
+                {{ $eskul->count() }}
+            </strong>
+
             data
 
         </div>
@@ -661,7 +696,9 @@
 
 
 @push('scripts')
+
 <script>
+
     $(document).ready(function () {
 
         $('#tabelEkstrakulikuler').DataTable({
@@ -681,38 +718,51 @@
 
             columnDefs: [
                 {
-                    // Gambar dan Aksi tidak bisa di-sort
+                    // Kolom Gambar dan Aksi tidak bisa di-sort
                     orderable: false,
                     targets: [1, 6]
                 }
             ],
 
             language: {
+
                 search: "",
-                searchPlaceholder: "Cari ekstrakurikuler...",
 
-                lengthMenu: "Tampilkan _MENU_ data",
+                searchPlaceholder:
+                    "Cari ekstrakurikuler...",
 
-                info: "Menampilkan _START_ - _END_ dari _TOTAL_ data",
+                lengthMenu:
+                    "Tampilkan _MENU_ data",
 
-                infoEmpty: "Tidak ada data",
+                info:
+                    "Menampilkan _START_ - _END_ dari _TOTAL_ data",
 
-                infoFiltered: "(difilter dari _MAX_ total data)",
+                infoEmpty:
+                    "Tidak ada data",
 
-                zeroRecords: "Data ekstrakurikuler tidak ditemukan",
+                infoFiltered:
+                    "(difilter dari _MAX_ total data)",
 
-                emptyTable: "Belum ada data ekstrakurikuler",
+                zeroRecords:
+                    "Data ekstrakurikuler tidak ditemukan",
+
+                emptyTable:
+                    "Belum ada data ekstrakurikuler",
 
                 paginate: {
+
                     first: "Awal",
+
                     last: "Akhir",
+
                     next: "Next",
+
                     previous: "Prev"
+
                 }
+
             },
 
-            // PERHATIKAN:
-            // Setelah object language di atas ada tanda koma
             drawCallback: function () {
 
                 const api = this.api();
@@ -737,9 +787,9 @@
     });
 
 
-    // ==============================
-    // HILANGKAN SUCCESS 5 DETIK
-    // ==============================
+    /* ============================== */
+    /* HILANGKAN SUCCESS 5 DETIK */
+    /* ============================== */
 
     setTimeout(function () {
 
@@ -747,44 +797,42 @@
             document.getElementById('success-alert');
 
         if (alert) {
-
             alert.style.transition =
                 'opacity 0.5s ease';
 
             alert.style.opacity = '0';
-
             setTimeout(function () {
-                alert.remove();
-            }, 500);
 
+                alert.remove();
+
+            }, 300);
         }
 
-    }, 5000);
+    }, 3000);
 
 
-    // ==============================
-    // HILANGKAN ERROR 5 DETIK
-    // ==============================
+    /* ============================== */
+    /* HILANGKAN ERROR 5 DETIK */
+    /* ============================== */
 
     setTimeout(function () {
 
         const alert =
             document.getElementById('error-alert');
-
         if (alert) {
-
             alert.style.transition =
                 'opacity 0.5s ease';
 
             alert.style.opacity = '0';
-
             setTimeout(function () {
-                alert.remove();
-            }, 500);
 
+                alert.remove();
+
+            }, 300);
         }
 
-    }, 5000);
+    }, 3000);
 
 </script>
+
 @endpush
