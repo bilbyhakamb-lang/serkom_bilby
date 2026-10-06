@@ -10,7 +10,7 @@ use Illuminate\Contracts\Encryption\DecryptException;
 
 class GaleriController extends Controller
 {
-    // Menampilkan data galeri
+    
     public function index()
     {
         $galeri = Galeri::latest()->get();
@@ -18,7 +18,7 @@ class GaleriController extends Controller
         return view('galeri.galeri', compact('galeri'));
     }
 
-    // Form tambah galeri
+    
     public function create()
     {
         $galeri = new Galeri();
@@ -27,7 +27,7 @@ class GaleriController extends Controller
         return view('galeri.add-edit', compact('galeri', 'title'));
     }
 
-    // Menyimpan data galeri
+    
     public function store(Request $request)
     {
         $request->validate([
@@ -62,7 +62,7 @@ class GaleriController extends Controller
             ->with('success', 'Data galeri berhasil ditambahkan.');
     }
 
-    // Memeriksa format file berdasarkan kategori
+    
     private function fileSesuaiKategori($ext, $kategori)
     {
         $formatFoto = ['jpg', 'jpeg', 'png', 'webp'];
@@ -79,7 +79,7 @@ class GaleriController extends Controller
         return false;
     }
 
-    // Mendekripsi ID ekstrakurikuler
+    
 private function decryptId($id)
     {
         try {
@@ -89,7 +89,7 @@ private function decryptId($id)
         }
     }
 
-    // Form edit galeri
+   
     public function edit($id)
     {
         $id = $this->decryptId($id);

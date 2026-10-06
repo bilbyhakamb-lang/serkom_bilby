@@ -9,20 +9,15 @@
     <meta name="description" content="Sistem Informasi Sekolah">
     <meta name="author" content="ProfileSekolah">
     <!-- Bootstrap -->
-    <link rel="stylesheet"
-          href="{{ asset('assets/libs/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/libs/bootstrap/css/bootstrap.min.css') }}">
     <!-- Bootstrap Icons -->
-    <link rel="stylesheet"
-          href="{{ asset('assets/libs/bootstrap-icons/bootstrap-icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/libs/bootstrap-icons/bootstrap-icons.css') }}">
     <!-- ApexCharts -->
-    <link rel="stylesheet"
-          href="{{ asset('assets/libs/apexcharts/apexcharts.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/libs/apexcharts/apexcharts.css') }}">
     <!-- Flatpickr -->
-    <link rel="stylesheet"
-          href="{{ asset('assets/libs/flatpickr/flatpickr.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/libs/flatpickr/flatpickr.min.css') }}">
     <!-- Main CSS -->
-    <link rel="stylesheet"
-          href="{{ asset('assets/css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
     <!-- DataTables CSS -->
     <link rel="stylesheet"href="{{ asset('assets/DataTables/css/datatables.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/DataTables/css/datatables.min.css') }}">
@@ -179,15 +174,13 @@
                     </li>
                 </ul>
             </div>
-            <!-- ============================= -->
-            <!-- EKSTRAKULIKULER & GALERI -->
-            <!-- ============================= -->
+            
             <div class="sidebar-menu-section">
                 <ul class="sidebar-menu-list">
                     <!-- EKSTRAKULIKULER -->
                     <li class="sidebar-menu-item">
                         <a href="{{ route('admin.ekstrakulikuler') }}"
-                           class="sidebar-menu-link {{ request()->is('ekstrakulikuler*') ? 'active' : '' }}">
+                           class="sidebar-menu-link {{ request()->is('ekstrakulikuler*') || request()->is('eskul*') ? 'active' : '' }}">
                             <i class="bi bi-trophy"></i>
                             <span>
                                 Kelola Ekstrakulikuler

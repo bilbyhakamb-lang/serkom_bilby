@@ -12,7 +12,7 @@
     <meta name="author" content="KasFlow Team">
 
     <!-- Favicon -->
-    <link rel="icon" type="images/png"href="{{ asset('assets/images/sma7.png') }}">
+    <link rel="icon" type="images/png"href="{{ asset('assets/images/logo sekolah.jpg') }}">
     
 
     <!-- Bootstrap -->

@@ -11,9 +11,7 @@ use Illuminate\Contracts\Encryption\DecryptException;
 
 class BeritaController extends Controller
 {
-    // =====================================================
-    // MENAMPILKAN DAFTAR BERITA
-    // =====================================================
+   
     public function index()
     {
         $berita = Berita::latest()->get();
@@ -23,9 +21,7 @@ class BeritaController extends Controller
     }
 
 
-    // =====================================================
-    // MENAMPILKAN FORM TAMBAH BERITA
-    // =====================================================
+   
     public function create()
     {
         $berita = new Berita();
@@ -35,9 +31,7 @@ class BeritaController extends Controller
     }
 
 
-    // =====================================================
-    // MENYIMPAN BERITA BARU
-    // =====================================================
+    
     public function store(Request $request)
     {
         $request->validate([
@@ -63,13 +57,13 @@ class BeritaController extends Controller
             'tanggal',
         ]);
 
-        // Upload gambar
+        
         if ($request->hasFile('gambar')) {
             $data['gambar'] = $request->file('gambar')
                 ->store('berita', 'public');
         }
 
-        // Menyimpan user yang membuat berita
+        
         $data['id_user'] = Auth::id();
 
         Berita::create($data);
@@ -80,35 +74,32 @@ class BeritaController extends Controller
     }
 
 
-    // =====================================================
-    // DETAIL BERITA
-    // ID TERENKRIPSI
-    // =====================================================
+   
     public function show($id)
     {
         try {
-            // Dekripsi ID
+            
             $idBerita = Crypt::decryptString($id);
 
         } catch (DecryptException $e) {
 
-            // Jika enkripsi rusak / tidak valid
+            
             return redirect()
                 ->route('admin.berita')
                 ->with('error', 'Link berita tidak valid.');
 
         } catch (\Exception $e) {
 
-            // Jika terjadi error lain
+            
             return redirect()
                 ->route('admin.berita')
                 ->with('error', 'Link berita tidak valid.');
         }
 
-        // Cari berita
+       
         $berita = Berita::find($idBerita);
 
-        // Jika berita tidak ditemukan
+      
         if (!$berita) {
             return redirect()
                 ->route('admin.berita')
@@ -121,20 +112,15 @@ class BeritaController extends Controller
     }
 
 
-    // =====================================================
-    // DETAIL BERITA
-    // METHOD LAMA
-    // =====================================================
+    
     public function detail($id)
     {
-        // Gunakan method show agar logika tidak dibuat dua kali
+        
         return $this->show($id);
     }
 
 
-    // =====================================================
-    // MENAMPILKAN FORM EDIT BERITA
-    // =====================================================
+    
     public function edit(Berita $berita)
     {
         $title = 'Edit Berita';
@@ -143,9 +129,7 @@ class BeritaController extends Controller
     }
 
 
-    // =====================================================
-    // MEMPERBARUI BERITA
-    // =====================================================
+    
     public function update(Request $request, Berita $berita)
     {
         $request->validate([
@@ -170,10 +154,10 @@ class BeritaController extends Controller
             'tanggal',
         ]);
 
-        // Jika memilih gambar baru
+        
         if ($request->hasFile('gambar')) {
 
-            // Hapus gambar lama
+            
             if (
                 $berita->gambar &&
                 Storage::disk('public')->exists($berita->gambar)
@@ -181,12 +165,12 @@ class BeritaController extends Controller
                 Storage::disk('public')->delete($berita->gambar);
             }
 
-            // Simpan gambar baru
+            
             $data['gambar'] = $request->file('gambar')
                 ->store('berita', 'public');
         }
 
-        // Update data berita
+        
         $berita->update($data);
 
         return redirect()
@@ -195,12 +179,10 @@ class BeritaController extends Controller
     }
 
 
-    // =====================================================
-    // MENGHAPUS BERITA
-    // =====================================================
+    
     public function destroy(Berita $berita)
     {
-        // Hapus gambar dari storage
+        
         if (
             $berita->gambar &&
             Storage::disk('public')->exists($berita->gambar)
@@ -208,7 +190,7 @@ class BeritaController extends Controller
             Storage::disk('public')->delete($berita->gambar);
         }
 
-        // Hapus data berita
+        
         $berita->delete();
 
         return redirect()

@@ -232,11 +232,8 @@
     .stat-card {
 
         background: white;
-
         border-radius: 15px;
-
         padding: 25px;
-
         text-align: center;
 
 
@@ -288,14 +285,12 @@
     .profile-image {
 
         width: 100%;
-
         height: 400px;
 
         /*
         Gambar memenuhi ukuran tanpa merusak proporsi.
         */
         object-fit: cover;
-
         border-radius: 18px;
     }
 
@@ -319,14 +314,9 @@
     .siswa-card {
 
         border: none;
-
         border-radius: 15px;
-
         overflow: hidden;
-
-        box-shadow:
-            0 5px 20px rgba(0,0,0,.06);
-
+        box-shadow: 0 5px 20px rgba(0,0,0,.06);
         height: 100%;
     }
 
@@ -339,9 +329,7 @@
     .teacher-card img {
 
         width: 100%;
-
         height: 260px;
-
         object-fit: cover;
     }
 
@@ -354,9 +342,7 @@
     .news-card img {
 
         width: 100%;
-
         height: 220px;
-
         object-fit: cover;
     }
 
@@ -369,9 +355,7 @@
     .eskul-card img {
 
         width: 100%;
-
         height: 220px;
-
         object-fit: cover;
     }
 
@@ -386,9 +370,7 @@
     .gallery-item {
 
         position: relative;
-
         overflow: hidden;
-
         border-radius: 15px;
     }
 
@@ -398,13 +380,10 @@
     Ukuran gambar dan video galeri.
     */
 
-    .gallery-item img,
-    .gallery-item video {
+    .gallery-item img,.gallery-item video {
 
         width: 100%;
-
         height: 230px;
-
         object-fit: cover;
     }
 
@@ -419,13 +398,9 @@
         position: absolute;
 
         left: 0;
-
         right: 0;
-
         bottom: 0;
-
         padding: 35px 15px 15px;
-
         color: white;
 
 
@@ -452,9 +427,7 @@
     .vision-box {
 
         background: #f3f8f5;
-
         border-radius: 18px;
-
         padding: 35px;
     }
 

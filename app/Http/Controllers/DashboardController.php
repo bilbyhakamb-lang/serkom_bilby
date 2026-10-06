@@ -11,9 +11,8 @@ use App\Http\Requests\UpdateDashboardRequest;
 
 class DashboardController extends Controller
 {
-    /**
-     * Menampilkan dashboard admin.
-     */
+   
+     
     public function index()
     {
         $data = [
@@ -28,9 +27,7 @@ class DashboardController extends Controller
         return view('dashboard.dashboard', $data);
     }
 
-    /**
-     * Menampilkan dashboard publik.
-     */
+    
     public function indexPublic()
     {
         return $this->index();

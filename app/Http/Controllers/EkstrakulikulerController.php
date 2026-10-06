@@ -10,9 +10,7 @@ use Illuminate\Contracts\Encryption\DecryptException;
 
 class EkstrakulikulerController extends Controller
 {
-    // =====================================================
-    // MENAMPILKAN DATA EKSTRAKURIKULER
-    // =====================================================
+   
     public function index()
     {
         $eskul = Ekstrakulikuler::all();
@@ -21,13 +19,10 @@ class EkstrakulikulerController extends Controller
     }
 
 
-    // =====================================================
-    // MENAMPILKAN DETAIL EKSTRAKURIKULER
-    // ID MENGGUNAKAN ENKRIPSI
-    // =====================================================
+   
     public function show($id = null)
     {
-        // Jika ID kosong
+        
         if (empty($id)) {
             return redirect()
                 ->route('admin.ekstrakulikuler')
@@ -35,30 +30,30 @@ class EkstrakulikulerController extends Controller
         }
 
         try {
-            // Dekripsi ID
+            
             $idEskul = Crypt::decryptString($id);
 
         } catch (DecryptException $e) {
 
-            // Jika ID enkripsi rusak / tidak valid
+            
             return redirect()
                 ->route('admin.ekstrakulikuler')
                 ->with('error', 'Data ekstrakurikuler tidak ditemukan.');
 
         } catch (\Exception $e) {
 
-            // Jika terjadi error lainnya
+            
             return redirect()
                 ->route('admin.ekstrakulikuler')
                 ->with('error', 'Data ekstrakurikuler tidak ditemukan.');
         }
 
 
-        // Cari data berdasarkan ID hasil dekripsi
+        
         $eskul = Ekstrakulikuler::find($idEskul);
 
 
-        // Jika data tidak ditemukan
+        
         if (!$eskul) {
             return redirect()
                 ->route('admin.ekstrakulikuler')
@@ -79,9 +74,7 @@ class EkstrakulikulerController extends Controller
     }
 
 
-    // =====================================================
-    // FORM TAMBAH EKSTRAKURIKULER
-    // =====================================================
+    
     public function create()
     {
         $eskul = new Ekstrakulikuler();
@@ -95,9 +88,7 @@ class EkstrakulikulerController extends Controller
     }
 
 
-    // =====================================================
-    // MENYIMPAN DATA EKSTRAKURIKULER
-    // =====================================================
+    
     public function store(Request $request)
     {
         $request->validate([
@@ -125,7 +116,7 @@ class EkstrakulikulerController extends Controller
         ]);
 
 
-        // Data teks
+        
         $data = $request->only([
             'nama_ekskul',
             'pembina',
@@ -134,7 +125,7 @@ class EkstrakulikulerController extends Controller
         ]);
 
 
-        // Upload gambar
+        
         if ($request->hasFile('gambar')) {
 
             $data['gambar'] = $request->file('gambar')
@@ -142,7 +133,7 @@ class EkstrakulikulerController extends Controller
         }
 
 
-        // Simpan data
+        
         Ekstrakulikuler::create($data);
 
 
@@ -155,15 +146,13 @@ class EkstrakulikulerController extends Controller
     }
 
 
-    // =====================================================
-    // FORM EDIT EKSTRAKURIKULER
-    // =====================================================
+    
     public function edit($id)
     {
         $eskul = Ekstrakulikuler::find($id);
 
 
-        // Jika data tidak ditemukan
+        
         if (!$eskul) {
             return redirect()
                 ->route('admin.ekstrakulikuler')
@@ -184,15 +173,13 @@ class EkstrakulikulerController extends Controller
     }
 
 
-    // =====================================================
-    // MEMPERBARUI DATA EKSTRAKURIKULER
-    // =====================================================
+    
     public function update(Request $request, $id)
     {
         $eskul = Ekstrakulikuler::find($id);
 
 
-        // Jika data tidak ditemukan
+       
         if (!$eskul) {
             return redirect()
                 ->route('admin.ekstrakulikuler')
@@ -203,7 +190,7 @@ class EkstrakulikulerController extends Controller
         }
 
 
-        // Validasi
+        
         $request->validate([
             'nama_ekskul' => 'required|string|max:40',
             'pembina' => 'required|string|max:40',
@@ -228,7 +215,7 @@ class EkstrakulikulerController extends Controller
         ]);
 
 
-        // Data yang diperbarui
+        
         $data = $request->only([
             'nama_ekskul',
             'pembina',
@@ -237,10 +224,10 @@ class EkstrakulikulerController extends Controller
         ]);
 
 
-        // Jika upload gambar baru
+        
         if ($request->hasFile('gambar')) {
 
-            // Hapus gambar lama
+            
             if (
                 $eskul->gambar &&
                 Storage::disk('public')->exists($eskul->gambar)
@@ -249,13 +236,13 @@ class EkstrakulikulerController extends Controller
             }
 
 
-            // Simpan gambar baru
+            
             $data['gambar'] = $request->file('gambar')
                 ->store('ekstrakurikuler', 'public');
         }
 
 
-        // Update database
+        
         $eskul->update($data);
 
 
@@ -268,15 +255,13 @@ class EkstrakulikulerController extends Controller
     }
 
 
-    // =====================================================
-    // MENGHAPUS DATA EKSTRAKURIKULER
-    // =====================================================
+    
     public function destroy($id)
     {
         $eskul = Ekstrakulikuler::find($id);
 
 
-        // Jika data tidak ditemukan
+        
         if (!$eskul) {
             return redirect()
                 ->route('admin.ekstrakulikuler')
@@ -287,7 +272,7 @@ class EkstrakulikulerController extends Controller
         }
 
 
-        // Hapus gambar
+       
         if (
             $eskul->gambar &&
             Storage::disk('public')->exists($eskul->gambar)
@@ -296,7 +281,7 @@ class EkstrakulikulerController extends Controller
         }
 
 
-        // Hapus data
+        
         $eskul->delete();
 
 
