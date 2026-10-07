@@ -1,5 +1,8 @@
 @extends('admin_app')
 
+{{-- <!-- Favicon -->
+    <link rel="icon" type="images/png"href="{{ asset('assets/images/logo sekolah.jpg') }}"> --}}
+
 @php
     use Illuminate\Support\Facades\Crypt;
 @endphp

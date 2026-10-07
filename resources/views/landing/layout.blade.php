@@ -101,11 +101,11 @@
                     </li>
 
                     {{-- Siswa --}}
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link" href="#siswa">
                             Siswa
                         </a>
-                    </li>
+                    </li> --}}
 
                     {{-- Berita --}}
                     <li class="nav-item">

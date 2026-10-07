@@ -1,5 +1,9 @@
 @extends('admin_app')
 
+<!-- Favicon -->
+    <link rel="icon" type="images/png"href="{{ asset('assets/images/logo sekolah.jpg') }}">
+
+
 @section('title', $title)
 
 @push('styles')

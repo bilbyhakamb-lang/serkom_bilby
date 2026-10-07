@@ -245,16 +245,17 @@
         transition: .2s;
     }
 
+    /* DETAIL */
     .btn-detail {
-        color: #0d8ca5;
+        background-color: #00c8e8;
+        color: white;
     }
 
     .btn-detail:hover {
-        background: #eaf8fb;
-        border-color: #b5e0e8;
-        color: #0d8ca5;
+        background-color: #00a9c5;
+        color: white;
     }
-
+    
     .btn-edit {
         color: #27804d;
     }

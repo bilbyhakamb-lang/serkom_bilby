@@ -103,7 +103,7 @@
                 <li class="sidebar-menu-item">
                     <a href="{{ route('dashboard.dashboard') }}"
                        class="sidebar-menu-link {{ request()->routeIs('dashboard.dashboard') ? 'active' : '' }}">
-                        <i class="bi bi-images"></i>
+                        <i class="bi bi-grid-1x2-fill"></i>
                         <span>
                             Dashboard
                         </span>
@@ -162,6 +162,17 @@
                             </span>
                         </a>
                     </li>
+
+                    @auth
+                @if (Auth::user()->role === 'admin')
+                    <a href="{{ route('admin.user.index') }}">
+                        <i class="fa-solid fa-users"></i>
+                        <span>
+                            Data User
+                        </span>
+                    </a>
+                @endif
+            @endauth
                     <!-- BERITA -->
                     <li class="sidebar-menu-item">
                         <a href="{{ route('admin.berita') }}"
