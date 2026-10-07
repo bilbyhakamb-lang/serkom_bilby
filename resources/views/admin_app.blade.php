@@ -103,7 +103,7 @@
                 <li class="sidebar-menu-item">
                     <a href="{{ route('dashboard.dashboard') }}"
                        class="sidebar-menu-link {{ request()->routeIs('dashboard.dashboard') ? 'active' : '' }}">
-                        <i class="bi bi-grid-1x2-fill"></i>
+                        <i class="bi bi-speedometer2"></i>
                         <span>
                             Dashboard
                         </span>

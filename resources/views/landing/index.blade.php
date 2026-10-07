@@ -106,17 +106,25 @@ body {
     height: 100%;
 }
 
+.teacher-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.teacher-card {
+    transition: .3s;
+}
+
+.teacher-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,.12);
+}
+
 .teacher-card img {
     width: 100%;
     height: 260px;
     object-fit: cover;
-    cursor: pointer;
-    transition: .3s;
-}
-
-.teacher-card img:hover {
-    opacity: .9;
-    transform: scale(1.01);
 }
 
 .news-card img,
@@ -157,19 +165,6 @@ body {
     background: #f3f8f5;
     border-radius: 18px;
     padding: 35px;
-}
-
-.modal-guru-img {
-    width: 160px;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 12px;
-}
-
-.guru-info {
-    background: #f8f9fa;
-    border-radius: 10px;
-    padding: 12px 15px;
 }
 
 @media (max-width: 768px) {
@@ -372,154 +367,49 @@ body {
 
                 <div class="col-md-3 guru-item {{ $loop->iteration > 4 ? 'guru-extra d-none' : '' }}">
 
-                    <div class="teacher-card bg-white">
+                    <a
+                        href="{{ route('landing.guru.detail', $item->id_guru) }}"
+                        class="teacher-link"
+                    >
 
-                        @if($item->foto)
+                        <div class="teacher-card bg-white">
 
-                            <img
-                                src="{{ asset('storage/' . $item->foto) }}"
-                                alt="{{ $item->nama_guru }}"
-                                data-bs-toggle="modal"
-                                data-bs-target="#modalGuru{{ $item->id_guru }}"
-                            >
+                            @if($item->foto)
 
-                        @else
+                                <img
+                                    src="{{ asset('storage/' . $item->foto) }}"
+                                    alt="{{ $item->nama_guru }}">
 
-                            <div
-                                class="d-flex align-items-center justify-content-center bg-light"
-                                style="height:260px"
-                            >
-                                <i class="bi bi-person fs-1 text-secondary"></i>
-                            </div>
+                            @else
 
-                        @endif
-
-                        <div class="p-3">
-
-                            <h5 class="fw-bold">
-                                {{ $item->nama_guru }}
-                            </h5>
-
-                            <p class="text-success mb-1">
-                                {{ $item->mapel ?? '-' }}
-                            </p>
-
-                            <small class="text-muted">
-                                NIP: {{ $item->nip ?? '-' }}
-                            </small>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div
-                    class="modal fade"
-                    id="modalGuru{{ $item->id_guru }}"
-                    tabindex="-1"
-                    aria-labelledby="judulGuru{{ $item->id_guru }}"
-                    aria-hidden="true"
-                >
-
-                    <div class="modal-dialog modal-dialog-centered">
-
-                        <div class="modal-content">
-
-                            <div class="modal-header">
-
-                                <h5
-                                    class="modal-title"
-                                    id="judulGuru{{ $item->id_guru }}"
+                                <div
+                                    class="d-flex align-items-center justify-content-center bg-light"
+                                    style="height:260px"
                                 >
-                                    Biodata Guru
+                                    <i class="bi bi-person fs-1 text-secondary"></i>
+                                </div>
+
+                            @endif
+
+                            <div class="p-3">
+
+                                <h5 class="fw-bold">
+                                    {{ $item->nama_guru }}
                                 </h5>
 
-                                <button
-                                    type="button"
-                                    class="btn-close"
-                                    data-bs-dismiss="modal"
-                                    aria-label="Close"
-                                ></button>
+                                <p class="text-success mb-1">
+                                    {{ $item->mapel ?? '-' }}
+                                </p>
 
-                            </div>
-
-                            <div class="modal-body">
-
-                                <div class="text-center">
-
-                                    @if($item->foto)
-
-                                        <img
-                                            src="{{ asset('storage/' . $item->foto) }}"
-                                            alt="{{ $item->nama_guru }}"
-                                            class="modal-guru-img mb-3"
-                                        >
-
-                                    @else
-
-                                        <div class="mb-3">
-                                            <i class="bi bi-person-circle fs-1 text-secondary"></i>
-                                        </div>
-
-                                    @endif
-
-                                    <h4 class="fw-bold mb-4">
-                                        {{ $item->nama_guru }}
-                                    </h4>
-
-                                </div>
-
-                                <div class="guru-info mb-3">
-                                    <div class="row">
-                                        <div class="col-5 fw-semibold">
-                                            Nama Guru
-                                        </div>
-                                        <div class="col-7">
-                                            {{ $item->nama_guru ?? '-' }}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="guru-info mb-3">
-                                    <div class="row">
-                                        <div class="col-5 fw-semibold">
-                                            NIP
-                                        </div>
-                                        <div class="col-7">
-                                            {{ $item->nip ?? '-' }}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="guru-info">
-                                    <div class="row">
-                                        <div class="col-5 fw-semibold">
-                                            Mata Pelajaran
-                                        </div>
-                                        <div class="col-7">
-                                            {{ $item->mapel ?? '-' }}
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="modal-footer">
-
-                                <button
-                                    type="button"
-                                    class="btn btn-success"
-                                    data-bs-dismiss="modal"
-                                >
-                                    Tutup
-                                </button>
+                                <small class="text-muted">
+                                    NIP: {{ $item->nip ?? '-' }}
+                                </small>
 
                             </div>
 
                         </div>
 
-                    </div>
+                    </a>
 
                 </div>
 
@@ -898,4 +788,4 @@ setupLihatSemua(
     'bi bi-chevron-up'
 );
 </script>
-@endpush    
+@endpush

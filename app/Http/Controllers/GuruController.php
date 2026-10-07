@@ -217,4 +217,14 @@ class GuruController extends Controller
             ->route('admin.guru')
             ->with('success', 'Data guru berhasil dihapus.');
     }
+
+    public function detail($id)
+    {
+        $guru = \App\Models\Guru::findOrFail($id);
+        $profil = \App\Models\ProfileSekolah::first();
+
+        return view('landing.guru-detail', compact('guru', 'profil'));
+    }
+
+    
 }

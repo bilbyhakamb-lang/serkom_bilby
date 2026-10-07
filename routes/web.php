@@ -67,6 +67,7 @@ Route::get('/guru/detail', function () {
 })->name('guru.detail.empty');
 // DETAIL GURU
 Route::get('/guru/{id}/detail', [GuruController::class, 'show'])->name('admin.guru.show');
+Route::get('/guru/{id}', [GuruController::class, 'detail'])->name('landing.guru.detail');
 
     // =================================================
     // SISWA
