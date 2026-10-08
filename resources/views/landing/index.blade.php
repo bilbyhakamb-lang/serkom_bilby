@@ -10,176 +10,192 @@
 
 @push('styles')
 <style>
-body {
-    background: #ffffff;
-}
+    body {
+        background: #ffffff;
+    }
 
-.hero {
-    min-height: 620px;
-    background:
-        linear-gradient(
-            rgba(24, 57, 43, .82),
-            rgba(24, 57, 43, .82)
-        ),
-        url('{{ $heroImage }}');
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    color: white;
-}
-
-.hero-content {
-    max-width: 800px;
-}
-
-.hero-content h1 {
-    font-size: 55px;
-    font-weight: 700;
-}
-
-.hero-content p {
-    font-size: 18px;
-    color: #e5eee8;
-    margin-top: 20px;
-}
-
-.section-padding {
-    padding: 80px 0;
-}
-
-.section-title {
-    text-align: center;
-    margin-bottom: 50px;
-}
-
-.section-title span {
-    color: #198754;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 2px;
-}
-
-.section-title h2 {
-    font-weight: 700;
-    margin-top: 8px;
-}
-
-.section-title p {
-    color: #6c757d;
-}
-
-.stat-card {
-    background: white;
-    border-radius: 15px;
-    padding: 25px;
-    text-align: center;
-    box-shadow: 0 5px 20px rgba(0,0,0,.06);
-    height: 100%;
-}
-
-.stat-card i {
-    font-size: 35px;
-    color: #198754;
-}
-
-.stat-card h3 {
-    margin-top: 10px;
-    font-weight: 700;
-}
-
-.profile-image {
-    width: 100%;
-    height: 400px;
-    object-fit: cover;
-    border-radius: 18px;
-}
-
-.teacher-card,
-.news-card,
-.eskul-card,
-.siswa-card {
-    border: none;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 5px 20px rgba(0,0,0,.06);
-    height: 100%;
-}
-
-.teacher-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-}
-
-.teacher-card {
-    transition: .3s;
-}
-
-.teacher-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,.12);
-}
-
-.teacher-card img {
-    width: 100%;
-    height: 260px;
-    object-fit: cover;
-}
-
-.news-card img,
-.eskul-card img {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-}
-
-.gallery-item {
-    position: relative;
-    overflow: hidden;
-    border-radius: 15px;
-}
-
-.gallery-item img,
-.gallery-item video {
-    width: 100%;
-    height: 230px;
-    object-fit: cover;
-}
-
-.gallery-title {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding: 35px 15px 15px;
-    color: white;
-    background:
-        linear-gradient(
-            transparent,
-            rgba(0,0,0,.8)
-        );
-}
-
-.vision-box {
-    background: #f3f8f5;
-    border-radius: 18px;
-    padding: 35px;
-}
-
-@media (max-width: 768px) {
     .hero {
-        min-height: 500px;
+        min-height: 620px;
+        background:
+            linear-gradient(
+                rgba(24, 57, 43, .82),
+                rgba(24, 57, 43, .82)
+            ),
+            url('{{ $heroImage }}');
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        color: white;
+    }
+
+    .hero-content {
+        max-width: 800px;
     }
 
     .hero-content h1 {
-        font-size: 38px;
+        font-size: 55px;
+        font-weight: 700;
+    }
+
+    .hero-content p {
+        font-size: 18px;
+        color: #e5eee8;
+        margin-top: 20px;
+    }
+
+    .section-padding {
+        padding: 80px 0;
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+    .section-title span {
+        color: #198754;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 2px;
+    }
+
+    .section-title h2 {
+        font-weight: 700;
+        margin-top: 8px;
+    }
+
+    .section-title p {
+        color: #6c757d;
+    }
+
+    .stat-card {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        text-align: center;
+        box-shadow: 0 5px 20px rgba(0,0,0,.06);
+        height: 100%;
+    }
+
+    .stat-card i {
+        font-size: 35px;
+        color: #198754;
+    }
+
+    .stat-card h3 {
+        margin-top: 10px;
+        font-weight: 700;
     }
 
     .profile-image {
-        height: 280px;
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 18px;
     }
-}
+
+    .teacher-card,
+    .news-card,
+    .eskul-card,
+    .siswa-card {
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 20px rgba(0,0,0,.06);
+        height: 100%;
+    }
+
+    .teacher-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
+
+    .teacher-card {
+        transition: .3s;
+    }
+
+    .teacher-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,.12);
+    }
+
+    .teacher-card img {
+        width: 100%;
+        height: 260px;
+        object-fit: cover;
+    }
+
+    .news-image-link {
+        display: block;
+        text-decoration: none;
+    }
+
+    .news-image-link img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        cursor: pointer;
+        transition: .3s;
+    }
+
+    .news-image-link:hover img {
+        transform: scale(1.03);
+    }
+
+    .eskul-card img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+    }
+
+    .gallery-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: 15px;
+    }
+
+    .gallery-item img,
+    .gallery-item video {
+        width: 100%;
+        height: 230px;
+        object-fit: cover;
+    }
+
+    .gallery-title {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 35px 15px 15px;
+        color: white;
+        background:
+            linear-gradient(
+                transparent,
+                rgba(0,0,0,.8)
+            );
+    }
+
+    .vision-box {
+        background: #f3f8f5;
+        border-radius: 18px;
+        padding: 35px;
+    }
+
+    @media (max-width: 768px) {
+        .hero {
+            min-height: 500px;
+        }
+
+        .hero-content h1 {
+            font-size: 38px;
+        }
+
+        .profile-image {
+            height: 280px;
+        }
+    }
 </style>
 @endpush
 
@@ -460,22 +476,29 @@ body {
 
                     <div class="news-card bg-white">
 
-                        @if($item->gambar)
+                        <a
+                            href="{{ route('landing.berita.detail', \Illuminate\Support\Facades\Crypt::encryptString((string) $item->id_berita)) }}"
+                            class="news-image-link"
+                        >
 
-                            <img
-                                src="{{ asset('storage/' . $item->gambar) }}"
-                                alt="{{ $item->judul }}">
+                            @if($item->gambar)
 
-                        @else
+                                <img
+                                    src="{{ asset('storage/' . $item->gambar) }}"
+                                    alt="{{ $item->judul }}">
 
-                            <div
-                                class="d-flex align-items-center justify-content-center bg-light"
-                                style="height:220px"
-                            >
-                                <i class="bi bi-newspaper fs-1 text-secondary"></i>
-                            </div>
+                            @else
 
-                        @endif
+                                <div
+                                    class="d-flex align-items-center justify-content-center bg-light"
+                                    style="height:220px"
+                                >
+                                    <i class="bi bi-newspaper fs-1 text-secondary"></i>
+                                </div>
+
+                            @endif
+
+                        </a>
 
                         <div class="p-4">
 
@@ -646,6 +669,7 @@ body {
                                 <source
                                     src="{{ asset('storage/' . $item->file) }}"
                                     type="video/mp4">
+
                                 Browser tidak mendukung video.
                             </video>
 
@@ -720,72 +744,72 @@ body {
 
 @push('scripts')
 <script>
-function setupLihatSemua(
-    buttonId,
-    itemClass,
-    textShow,
-    textHide,
-    iconShow,
-    iconHide
-) {
-    const button = document.getElementById(buttonId);
+    function setupLihatSemua(
+        buttonId,
+        itemClass,
+        textShow,
+        textHide,
+        iconShow,
+        iconHide
+    ) {
+        const button = document.getElementById(buttonId);
 
-    if (!button) {
-        return;
+        if (!button) {
+            return;
+        }
+
+        button.addEventListener('click', function () {
+
+            const items = document.querySelectorAll('.' + itemClass);
+
+            items.forEach(function (item) {
+                item.classList.toggle('d-none');
+            });
+
+            const sedangTampil =
+                items.length > 0 &&
+                !items[0].classList.contains('d-none');
+
+            this.innerHTML = sedangTampil
+                ? '<i class="' + iconHide + ' me-2"></i>' + textHide
+                : '<i class="' + iconShow + ' me-2"></i>' + textShow;
+        });
     }
 
-    button.addEventListener('click', function () {
+    setupLihatSemua(
+        'btnLihatGuru',
+        'guru-extra',
+        'Lihat Semua Data Guru',
+        'Sembunyikan Data Guru',
+        'bi bi-people',
+        'bi bi-chevron-up'
+    );
 
-        const items = document.querySelectorAll('.' + itemClass);
+    setupLihatSemua(
+        'btnLihatBerita',
+        'berita-extra',
+        'Lihat Semua Data Berita',
+        'Sembunyikan Data Berita',
+        'bi bi-newspaper',
+        'bi bi-chevron-up'
+    );
 
-        items.forEach(function (item) {
-            item.classList.toggle('d-none');
-        });
+    setupLihatSemua(
+        'btnLihatEskul',
+        'eskul-extra',
+        'Lihat Semua Data Ekstrakurikuler',
+        'Sembunyikan Data Ekstrakurikuler',
+        'bi bi-trophy',
+        'bi bi-chevron-up'
+    );
 
-        const sedangTampil =
-            items.length > 0 &&
-            !items[0].classList.contains('d-none');
-
-        this.innerHTML = sedangTampil
-            ? '<i class="' + iconHide + ' me-2"></i>' + textHide
-            : '<i class="' + iconShow + ' me-2"></i>' + textShow;
-    });
-}
-
-setupLihatSemua(
-    'btnLihatGuru',
-    'guru-extra',
-    'Lihat Semua Data Guru',
-    'Sembunyikan Data Guru',
-    'bi bi-people',
-    'bi bi-chevron-up'
-);
-
-setupLihatSemua(
-    'btnLihatBerita',
-    'berita-extra',
-    'Lihat Semua Data Berita',
-    'Sembunyikan Data Berita',
-    'bi bi-newspaper',
-    'bi bi-chevron-up'
-);
-
-setupLihatSemua(
-    'btnLihatEskul',
-    'eskul-extra',
-    'Lihat Semua Data Ekstrakurikuler',
-    'Sembunyikan Data Ekstrakurikuler',
-    'bi bi-trophy',
-    'bi bi-chevron-up'
-);
-
-setupLihatSemua(
-    'btnLihatGaleri',
-    'galeri-extra',
-    'Lihat Semua Data Galeri',
-    'Sembunyikan Data Galeri',
-    'bi bi-images',
-    'bi bi-chevron-up'
-);
+    setupLihatSemua(
+        'btnLihatGaleri',
+        'galeri-extra',
+        'Lihat Semua Data Galeri',
+        'Sembunyikan Data Galeri',
+        'bi bi-images',
+        'bi bi-chevron-up'
+    );
 </script>
 @endpush

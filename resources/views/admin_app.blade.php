@@ -208,7 +208,17 @@
                             </span>
                         </a>
                     </li>
-                </ul>
+
+                    @if(auth()->user()->role === 'Admin')
+                        <li class="sidebar-menu-item">
+                            <a href="{{ route('admin.user') }}"
+                                class="sidebar-menu-link {{ request()->routeIs('admin.user', 'user.create', 'user.edit') ? 'active' : '' }}">
+                                <i class="bi bi-person-fill"></i>
+                            <span>Data User</span>
+                            </a>
+                        </li>
+                    @endif
+                
             </div>
             <!-- ============================= -->
             <!-- LOGOUT SIDEBAR -->

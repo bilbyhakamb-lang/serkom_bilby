@@ -4,24 +4,34 @@ namespace App\Http\Controllers;
 
 use App\Models\Berita;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Encryption\DecryptException;
 
 class BeritaController extends Controller
 {
-   
+    /*
+    |--------------------------------------------------------------------------
+    | MENAMPILKAN DATA BERITA ADMIN
+    |--------------------------------------------------------------------------
+    */
+
     public function index()
     {
         $berita = Berita::latest()->get();
         $title = 'Berita';
 
-        return view('berita.berita', compact('berita', 'title'));
+        return view('berita.berita.', compact('berita', 'title'));
     }
 
 
-   
+    /*
+    |--------------------------------------------------------------------------
+    | FORM TAMBAH BERITA
+    |--------------------------------------------------------------------------
+    */
+
     public function create()
     {
         $berita = new Berita();
@@ -31,7 +41,12 @@ class BeritaController extends Controller
     }
 
 
-    
+    /*
+    |--------------------------------------------------------------------------
+    | MENYIMPAN BERITA
+    |--------------------------------------------------------------------------
+    */
+
     public function store(Request $request)
     {
         $request->validate([
@@ -57,13 +72,11 @@ class BeritaController extends Controller
             'tanggal',
         ]);
 
-        
         if ($request->hasFile('gambar')) {
             $data['gambar'] = $request->file('gambar')
                 ->store('berita', 'public');
         }
 
-        
         $data['id_user'] = Auth::id();
 
         Berita::create($data);
@@ -74,32 +87,28 @@ class BeritaController extends Controller
     }
 
 
-   
+    /*
+    |--------------------------------------------------------------------------
+    | DETAIL BERITA ADMIN
+    |--------------------------------------------------------------------------
+    */
+
     public function show($id)
     {
         try {
-            
             $idBerita = Crypt::decryptString($id);
-
         } catch (DecryptException $e) {
-
-            
             return redirect()
                 ->route('admin.berita')
                 ->with('error', 'Link berita tidak valid.');
-
         } catch (\Exception $e) {
-
-            
             return redirect()
                 ->route('admin.berita')
                 ->with('error', 'Link berita tidak valid.');
         }
 
-       
         $berita = Berita::find($idBerita);
 
-      
         if (!$berita) {
             return redirect()
                 ->route('admin.berita')
@@ -112,15 +121,58 @@ class BeritaController extends Controller
     }
 
 
-    
+    /*
+    |--------------------------------------------------------------------------
+    | DETAIL BERITA LANDING / PUBLIC
+    |--------------------------------------------------------------------------
+    */
+
+    public function landingDetail($id)
+    {
+        try {
+            $idBerita = Crypt::decryptString($id);
+        } catch (DecryptException $e) {
+            return redirect()
+                ->route('landing')
+                ->with('error', 'Link berita tidak valid.');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('landing')
+                ->with('error', 'Link berita tidak valid.');
+        }
+
+        $berita = Berita::find($idBerita);
+
+        if (!$berita) {
+            return redirect()
+                ->route('landing')
+                ->with('error', 'Berita tidak ditemukan.');
+        }
+
+        $title = 'Detail Berita';
+
+        return view('landing.berita.detail', compact('berita', 'title'));
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | DETAIL BERITA LAMA
+    |--------------------------------------------------------------------------
+    */
+
     public function detail($id)
     {
-        
         return $this->show($id);
     }
 
 
-    
+    /*
+    |--------------------------------------------------------------------------
+    | FORM EDIT BERITA
+    |--------------------------------------------------------------------------
+    */
+
     public function edit(Berita $berita)
     {
         $title = 'Edit Berita';
@@ -129,7 +181,12 @@ class BeritaController extends Controller
     }
 
 
-    
+    /*
+    |--------------------------------------------------------------------------
+    | UPDATE BERITA
+    |--------------------------------------------------------------------------
+    */
+
     public function update(Request $request, Berita $berita)
     {
         $request->validate([
@@ -154,10 +211,7 @@ class BeritaController extends Controller
             'tanggal',
         ]);
 
-        
         if ($request->hasFile('gambar')) {
-
-            
             if (
                 $berita->gambar &&
                 Storage::disk('public')->exists($berita->gambar)
@@ -165,12 +219,10 @@ class BeritaController extends Controller
                 Storage::disk('public')->delete($berita->gambar);
             }
 
-            
             $data['gambar'] = $request->file('gambar')
                 ->store('berita', 'public');
         }
 
-        
         $berita->update($data);
 
         return redirect()
@@ -179,10 +231,14 @@ class BeritaController extends Controller
     }
 
 
-    
+    /*
+    |--------------------------------------------------------------------------
+    | HAPUS BERITA
+    |--------------------------------------------------------------------------
+    */
+
     public function destroy(Berita $berita)
     {
-        
         if (
             $berita->gambar &&
             Storage::disk('public')->exists($berita->gambar)
@@ -190,7 +246,6 @@ class BeritaController extends Controller
             Storage::disk('public')->delete($berita->gambar);
         }
 
-        
         $berita->delete();
 
         return redirect()
