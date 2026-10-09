@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Berita;
+use App\Models\ProfileSekolah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
@@ -11,27 +12,16 @@ use Illuminate\Contracts\Encryption\DecryptException;
 
 class BeritaController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | MENAMPILKAN DATA BERITA ADMIN
-    |--------------------------------------------------------------------------
-    */
-
+    // Menampilkan semua berita di halaman admin
     public function index()
     {
         $berita = Berita::latest()->get();
         $title = 'Berita';
 
-        return view('berita.berita.', compact('berita', 'title'));
+        return view('berita.berita', compact('berita', 'title'));
     }
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | FORM TAMBAH BERITA
-    |--------------------------------------------------------------------------
-    */
-
+    // Menampilkan form tambah berita
     public function create()
     {
         $berita = new Berita();
@@ -40,13 +30,7 @@ class BeritaController extends Controller
         return view('berita.add-edit', compact('berita', 'title'));
     }
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | MENYIMPAN BERITA
-    |--------------------------------------------------------------------------
-    */
-
+    // Menyimpan berita baru
     public function store(Request $request)
     {
         $request->validate([
@@ -86,13 +70,7 @@ class BeritaController extends Controller
             ->with('success', 'Berita berhasil ditambahkan.');
     }
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | DETAIL BERITA ADMIN
-    |--------------------------------------------------------------------------
-    */
-
+    // Menampilkan detail berita dari halaman admin
     public function show($id)
     {
         try {
@@ -120,13 +98,7 @@ class BeritaController extends Controller
         return view('berita.detail', compact('berita', 'title'));
     }
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | DETAIL BERITA LANDING / PUBLIC
-    |--------------------------------------------------------------------------
-    */
-
+    // Menampilkan detail berita untuk pengunjung landing
     public function landingDetail($id)
     {
         try {
@@ -149,30 +121,25 @@ class BeritaController extends Controller
                 ->with('error', 'Berita tidak ditemukan.');
         }
 
+        // Mengambil profil sekolah untuk navbar dan footer landing
+        $profil = ProfileSekolah::first();
+
         $title = 'Detail Berita';
 
-        return view('landing.berita.detail', compact('berita', 'title'));
+        return view('landing.berita-detail', compact(
+            'berita',
+            'title',
+            'profil'
+        ));
     }
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | DETAIL BERITA LAMA
-    |--------------------------------------------------------------------------
-    */
-
+    // Mempertahankan method detail untuk route lama
     public function detail($id)
     {
         return $this->show($id);
     }
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | FORM EDIT BERITA
-    |--------------------------------------------------------------------------
-    */
-
+    // Menampilkan form edit berita
     public function edit(Berita $berita)
     {
         $title = 'Edit Berita';
@@ -180,13 +147,7 @@ class BeritaController extends Controller
         return view('berita.add-edit', compact('berita', 'title'));
     }
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | UPDATE BERITA
-    |--------------------------------------------------------------------------
-    */
-
+    // Memperbarui data berita
     public function update(Request $request, Berita $berita)
     {
         $request->validate([
@@ -230,13 +191,7 @@ class BeritaController extends Controller
             ->with('success', 'Berita berhasil diperbarui.');
     }
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | HAPUS BERITA
-    |--------------------------------------------------------------------------
-    */
-
+    // Menghapus berita beserta gambar yang tersimpan
     public function destroy(Berita $berita)
     {
         if (

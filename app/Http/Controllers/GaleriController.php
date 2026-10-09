@@ -80,7 +80,7 @@ class GaleriController extends Controller
     }
 
     
-private function decryptId($id)
+    private function decryptId($id)
     {
         try {
             return Crypt::decryptString($id);
@@ -154,12 +154,24 @@ private function decryptId($id)
             ->with('success', 'Data galeri berhasil diperbarui.');
     }
 
-    // Menampilkan detail galeri
     public function show($id)
     {
-        $id = $this->decryptId($id);
+        try {
+            $idGaleri = Crypt::decryptString($id);
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('admin.galeri')
+                ->with('error', 'Link galeri tidak valid atau data sudah dihapus.');
+        }
 
-        $galeri = Galeri::findOrFail($id);
+        $galeri = Galeri::find($idGaleri);
+
+        if (!$galeri) {
+            return redirect()
+                ->route('admin.galeri')
+                ->with('error', 'Data galeri tidak ditemukan atau sudah dihapus.');
+        }
+
         $title = 'Detail Galeri';
 
         return view('galeri.detail', compact('galeri', 'title'));

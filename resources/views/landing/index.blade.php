@@ -1,3 +1,4 @@
+
 @extends('landing.layout')
 
 @section('title', 'SMAN 7 TASIKMALAYA')
@@ -130,6 +131,7 @@
     .news-image-link {
         display: block;
         text-decoration: none;
+        overflow: hidden;
     }
 
     .news-image-link img {
@@ -144,10 +146,26 @@
         transform: scale(1.03);
     }
 
+    /* LINK FOTO EKSTRAKURIKULER */
+    .eskul-image-link {
+        display: block;
+        overflow: hidden;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    /* GAMBAR EKSTRAKURIKULER */
     .eskul-card img {
+        display: block;
         width: 100%;
         height: 220px;
         object-fit: cover;
+        transition: .3s;
+    }
+
+    /* EFEK SAAT FOTO EKSTRAKURIKULER DISOROT */
+    .eskul-image-link:hover img {
+        transform: scale(1.04);
     }
 
     .gallery-item {
@@ -201,6 +219,7 @@
 
 @section('content')
 
+{{-- ================= HERO ================= --}}
 <section class="hero" id="beranda">
     <div class="container">
         <div class="hero-content">
@@ -231,6 +250,7 @@
     </div>
 </section>
 
+{{-- ================= STATISTIK ================= --}}
 <section class="py-5 bg-light">
     <div class="container">
         <div class="row g-4">
@@ -271,6 +291,7 @@
     </div>
 </section>
 
+{{-- ================= PROFIL SEKOLAH ================= --}}
 <section class="section-padding" id="profil">
     <div class="container">
 
@@ -337,6 +358,7 @@
     </div>
 </section>
 
+{{-- ================= VISI DAN MISI ================= --}}
 <section class="section-padding bg-light">
     <div class="container">
 
@@ -351,15 +373,11 @@
                 <i class="bi bi-bullseye fs-1 text-success"></i>
 
                 <div>
-
-                    <h4 class="fw-bold">
-                        Visi & Misi
-                    </h4>
+                    <h4 class="fw-bold">Visi & Misi</h4>
 
                     <p class="text-muted mb-0">
                         {{ $profil->visi_misi ?? '-' }}
                     </p>
-
                 </div>
 
             </div>
@@ -368,6 +386,7 @@
     </div>
 </section>
 
+{{-- ================= GURU ================= --}}
 <section class="section-padding" id="guru">
     <div class="container">
 
@@ -459,6 +478,7 @@
     </div>
 </section>
 
+{{-- ================= BERITA ================= --}}
 <section class="section-padding" id="berita">
     <div class="container">
 
@@ -555,6 +575,7 @@
     </div>
 </section>
 
+{{-- ================= EKSTRAKURIKULER ================= --}}
 <section class="section-padding bg-light" id="eskul">
     <div class="container">
 
@@ -566,29 +587,39 @@
 
         <div class="row g-4">
 
-            @forelse($eskul as $item)
+            {{-- MENAMPILKAN 3 EKSTRAKURIKULER PERTAMA --}}
+            @forelse($eskul->take(3) as $item)
 
-                <div class="col-md-4 eskul-item {{ $loop->iteration > 6 ? 'eskul-extra d-none' : '' }}">
-
+                <div class="col-md-4">
                     <div class="eskul-card bg-white">
 
-                        @if($item->gambar)
+                        {{-- FOTO ESKUL BISA DIKLIK --}}
+                        <a
+                            href="{{ route('landing.eskul.detail', $item->id_ekskul) }}"
+                            class="eskul-image-link"
+                            title="Lihat biodata {{ $item->nama_ekskul }}"
+                        >
 
-                            <img
-                                src="{{ asset('storage/' . $item->gambar) }}"
-                                alt="{{ $item->nama_ekskul }}">
+                            @if($item->gambar)
 
-                        @else
+                                <img
+                                    src="{{ asset('storage/' . $item->gambar) }}"
+                                    alt="{{ $item->nama_ekskul }}">
 
-                            <div
-                                class="d-flex align-items-center justify-content-center bg-light"
-                                style="height:220px"
-                            >
-                                <i class="bi bi-trophy fs-1 text-secondary"></i>
-                            </div>
+                            @else
 
-                        @endif
+                                <div
+                                    class="d-flex align-items-center justify-content-center bg-light"
+                                    style="height:220px"
+                                >
+                                    <i class="bi bi-trophy fs-1 text-secondary"></i>
+                                </div>
 
+                            @endif
+
+                        </a>
+
+                        {{-- INFORMASI SINGKAT ESKUL --}}
                         <div class="p-4">
 
                             <h5 class="fw-bold">
@@ -607,7 +638,6 @@
                         </div>
 
                     </div>
-
                 </div>
 
             @empty
@@ -620,14 +650,79 @@
 
         </div>
 
-        @if($eskul->count() > 6)
+        {{-- MENAMPILKAN EKSTRAKURIKULER TAMBAHAN --}}
+        @if($eskul->count() > 3)
 
+            <div class="collapse mt-4" id="eskulTambahan">
+                <div class="row g-4">
+
+                    @foreach($eskul->slice(3) as $item)
+
+                        <div class="col-md-4">
+                            <div class="eskul-card bg-white">
+
+                                {{-- FOTO ESKUL TAMBAHAN BISA DIKLIK --}}
+                                <a
+                                    href="{{ route('landing.eskul.detail', $item->id_ekskul) }}"
+                                    class="eskul-image-link"
+                                    title="Lihat biodata {{ $item->nama_ekskul }}"
+                                >
+
+                                    @if($item->gambar)
+
+                                        <img
+                                            src="{{ asset('storage/' . $item->gambar) }}"
+                                            alt="{{ $item->nama_ekskul }}">
+
+                                    @else
+
+                                        <div
+                                            class="d-flex align-items-center justify-content-center bg-light"
+                                            style="height:220px"
+                                        >
+                                            <i class="bi bi-trophy fs-1 text-secondary"></i>
+                                        </div>
+
+                                    @endif
+
+                                </a>
+
+                                {{-- INFORMASI SINGKAT ESKUL --}}
+                                <div class="p-4">
+
+                                    <h5 class="fw-bold">
+                                        {{ $item->nama_ekskul }}
+                                    </h5>
+
+                                    <p class="text-muted">
+                                        {{ \Illuminate\Support\Str::limit($item->deskripsi ?? '', 100) }}
+                                    </p>
+
+                                    <small class="text-success">
+                                        <i class="bi bi-person me-1"></i>
+                                        {{ $item->pembina ?? '-' }}
+                                    </small>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    @endforeach
+
+                </div>
+            </div>
+
+            {{-- TOMBOL LIHAT SEMUA --}}
             <div class="text-center mt-5">
 
                 <button
                     type="button"
-                    id="btnLihatEskul"
                     class="btn btn-success px-4"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#eskulTambahan"
+                    aria-expanded="false"
+                    aria-controls="eskulTambahan"
                 >
                     <i class="bi bi-trophy me-2"></i>
                     Lihat Semua Data Ekstrakurikuler
@@ -640,6 +735,7 @@
     </div>
 </section>
 
+{{-- ================= GALERI SEKOLAH ================= --}}
 <section class="section-padding" id="galeri">
     <div class="container">
 
@@ -655,39 +751,61 @@
 
                 <div class="col-md-4 galeri-item {{ $loop->iteration > 6 ? 'galeri-extra d-none' : '' }}">
 
-                    <div class="gallery-item">
+                    {{-- LINK KE HALAMAN DETAIL --}}
+                    <a
+                        href="{{ route('landing.galeri.detail', $item->id_galeri) }}"
+                        class="gallery-detail-link"
+                        title="Lihat detail {{ $item->judul }}"
+                    >
 
-                        @if($item->kategori === 'Foto')
+                        <div class="gallery-item">
 
-                            <img
-                                src="{{ asset('storage/' . $item->file) }}"
-                                alt="{{ $item->judul }}">
+                            {{-- MEDIA GALERI --}}
+                            @if($item->kategori === 'Foto')
 
-                        @else
-
-                            <video controls>
-                                <source
+                                <img
                                     src="{{ asset('storage/' . $item->file) }}"
-                                    type="video/mp4">
+                                    alt="{{ $item->judul }}"
+                                    loading="lazy"
+                                >
 
-                                Browser tidak mendukung video.
-                            </video>
+                            @else
 
-                        @endif
+                                <video
+                                    muted
+                                    playsinline
+                                    preload="metadata"
+                                    aria-label="{{ $item->judul }}"
+                                >
+                                    <source src="{{ asset('storage/' . $item->file) }}">
 
-                        <div class="gallery-title">
+                                    Browser tidak mendukung video.
+                                </video>
 
-                            <h6 class="mb-1">
-                                {{ $item->judul }}
-                            </h6>
+                            @endif
 
-                            <small>
-                                {{ $item->kategori }}
-                            </small>
+                            {{-- JUDUL DAN KATEGORI --}}
+                            <div class="gallery-title">
+
+                                <h6 class="mb-1">
+                                    {{ $item->judul }}
+                                </h6>
+
+                                <small>
+                                    <i class="bi {{ $item->kategori === 'Foto' ? 'bi-image' : 'bi-camera-video' }} me-1"></i>
+                                    {{ $item->kategori }}
+                                </small>
+
+                                <div class="small mt-2">
+                                    <i class="bi bi-eye me-1"></i>
+                                    Lihat Detail
+                                </div>
+
+                            </div>
 
                         </div>
 
-                    </div>
+                    </a>
 
                 </div>
 
@@ -701,6 +819,7 @@
 
         </div>
 
+        {{-- TOMBOL LIHAT SEMUA --}}
         @if($galeri->count() > 6)
 
             <div class="text-center mt-5">
@@ -721,6 +840,7 @@
     </div>
 </section>
 
+{{-- ================= PENUTUP ================= --}}
 <section class="py-5 bg-success text-white">
     <div class="container text-center">
 
@@ -742,6 +862,7 @@
 
 @endsection
 
+{{-- ================= JAVASCRIPT ================= --}}
 @push('scripts')
 <script>
     function setupLihatSemua(
@@ -791,15 +912,6 @@
         'Lihat Semua Data Berita',
         'Sembunyikan Data Berita',
         'bi bi-newspaper',
-        'bi bi-chevron-up'
-    );
-
-    setupLihatSemua(
-        'btnLihatEskul',
-        'eskul-extra',
-        'Lihat Semua Data Ekstrakurikuler',
-        'Sembunyikan Data Ekstrakurikuler',
-        'bi bi-trophy',
         'bi bi-chevron-up'
     );
 
