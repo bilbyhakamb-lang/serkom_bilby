@@ -35,8 +35,8 @@ Route::get('/galeri-detail/{id}', [LandingController::class,'detailGaleri'])->wh
 Route::get('/ekstrakurikuler-detail/{id}', [LandingController::class,'detailEskul'])->whereNumber('id')->name('landing.eskul.detail');
 // Detail berita untuk pengunjung landing
 Route::get('/berita-detail/{id}', [BeritaController::class, 'landingDetail'])->name('landing.berita.detail');
-// Detail guru untuk pengunjung landing
-Route::get('/guru-detail/{id}', [GuruController::class, 'detail'])->name('landing.guru.detail');
+ // Detail guru untuk pengunjung landing
+Route::get('/guru-detail/{slug}', [GuruController::class, 'detail'])->name('landing.guru.detail');
 // Halaman login
 Route::get('/login', function () {
     return view('login.login');

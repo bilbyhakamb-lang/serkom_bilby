@@ -1,4 +1,3 @@
-
 @extends('landing.layout')
 
 @section('title', 'SMAN 7 TASIKMALAYA')
@@ -236,7 +235,7 @@
                 {{ $profil->deskripsi ?? 'Membangun generasi unggul, berkarakter, dan berprestasi.' }}
             </p>
 
-            <div class="mt-4">
+            {{-- <div class="mt-4">
                 <a href="#profil" class="btn btn-success btn-lg me-2">
                     Lihat Profil
                 </a>
@@ -244,7 +243,7 @@
                 <a href="#berita" class="btn btn-outline-light btn-lg">
                     Berita Sekolah
                 </a>
-            </div>
+            </div> --}}
 
         </div>
     </div>
@@ -403,9 +402,7 @@
                 <div class="col-md-3 guru-item {{ $loop->iteration > 4 ? 'guru-extra d-none' : '' }}">
 
                     <a
-                        href="{{ route('landing.guru.detail', $item->id_guru) }}"
-                        class="teacher-link"
-                    >
+                        href="{{ route('landing.guru.detail', $item->slug) }}"class="teacher-link">
 
                         <div class="teacher-card bg-white">
 
