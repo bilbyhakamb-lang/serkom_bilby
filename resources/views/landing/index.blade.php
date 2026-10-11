@@ -228,7 +228,7 @@
             </span>
 
             <h1 class="mt-3">
-                {{ $profil->nama_sekolah ?? 'SMAN 7 TASIKMALAYA' }}
+                {{ $profilSekolah->nama_sekolah ?? 'SMAN 7 TASIKMALAYA' }}
             </h1>
 
             <p>

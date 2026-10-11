@@ -2,9 +2,7 @@
 
 <link rel="icon" type="image/png" href="{{ asset('assets/images/logo sekolah.jpg') }}">
 
-@section('title', isset($profilSekolah) && $profilSekolah->exists
-    ? 'Edit Profile Sekolah'
-    : 'Tambah Profile Sekolah')
+@section ('title', 'SMAN 7 TASIKMALAYA')
 
 @push('styles')
 <style>

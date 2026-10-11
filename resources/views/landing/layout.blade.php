@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>@yield('title', 'SMAN 7 TASIKMALAYA')</title>
+
+    <title>{{ $profil?->nama_sekolah ?? 'SMAN 7 TASIKMALAYA' }}</title>
+
 
     <link rel="icon" href="{{ $profil && $profil->logo ? asset('storage/' . $profil->logo) : asset('assets/images/logo sekolah.jpg') }}">
 
